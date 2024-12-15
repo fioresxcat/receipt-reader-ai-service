@@ -1,0 +1,160 @@
+co.opmart 96 hung vuong	CO.OPMART 96 HUNG VUONG
+co.opmart ben tre	CO.OPMART BEN TRE
+co.opmart ben luc	CO.OPMART BEN LUC
+co.opmart bien hoa	CO.OPMART BIEN HOA
+co.opmart binh tan	CO.OPMART BINH TAN
+co.opmart binh trieu	CO.OPMART BINH TRIEU
+co.opmart binh tan 2	CO.OPMART BINH TAN 2
+co.opmart ca mau	CO.OPMART CA MAU
+co.opmart cai lay	CO.OPMART CAI LAY
+co.opmart can giuoc	CO.OPMART CAN GIUOC
+co.opmart can tho	CO.OPMART CAN THO
+co.opmart chu van an	CO.OPMART CHU VAN AN
+co.opmart cong quynh	CO.OPMART CONG QUYNH
+co.opmart can gio	CO.OPMART CAN GIO
+co.opmart cu chi	CO.OPMART CU CHI
+co.opmart do van day	CO.OPMART DO VAN DAY
+co.opmart dong van cong	CO.OPMART DONG VAN CONG
+co.opmart go cong	CO.OPMART GO CONG
+co.opmart go dau	CO.OPMART GO DAU
+co.opmart foodcosa	CO.OPMART FOODCOSA
+co.opmart hau giang	CO.OPMART HAU GIANG
+co.opmart ha noi	CO.OPMART HA NOI
+co.opmart hiep thanh	CO.OPMART HIEP THANH
+co.opmart hoa binh	CO.OPMART HOA BINH
+co.opmart hoc mon	CO.OPMART HOC MON
+co.opmart hung vuong	CO.OPMART HUNG VUONG
+co.opmart huynh tan phat	CO.OPMART HUYNH TAN PHAT
+co.opmart ly thuong kiet	CO.OPMART LY THUONG KIET
+co.opmart nguyen anh thu	CO.OPMART NGUYEN ANH THU
+co.opmart nguyen binh	CO.OPMART NGUYEN BINH
+co.opmart nguyen dinh chieu	CO.OPMART NGUYEN DINH CHIEU
+co.opmart nguyen kiem	CO.OPMART NGUYEN KIEM
+co.opmart nhieu loc	CO.OPMART NHIEU LOC
+co.opmart phan van hon	CO.OPMART PHAN VAN HON
+co.opmart phan van tri	CO.OPMART PHAN VAN TRI
+co.opmart phu lam	CO.OPMART PHU LAM
+co.opmart phu tho	CO.OPMART PHU THO
+co.opmart rach mieu	CO.OPMART RACH MIEU
+co.opmart rach gia	CO.OPMART RACH GIA
+co.opmart rach soi	CO.OPMART RACH SOI
+co.opmart sca au co	CO.OPMART SCA AU CO
+co.opmart sca cao thang	CO.OPMART SCA CAO THANG
+co.opmart sca hoang van thu	CO.OPMART SCA HOANG VAN THU
+co.opmart sca hoang van chieu	CO.OPMART SCA HOANG VAN CHIEU
+co.opmart tam binh	CO.OPMART TAM BINH
+co.opmart thang loi	CO.OPMART THANG LOI
+co.opmart to ky	CO.OPMART TO KY
+co.opmart vung tau	CO.OPMART VUNG TAU
+co.opmart vi thanh	CO.OPMART VI THANH
+co.opmart tuy ly vuong	CO.OPMART TUY LY VUONG
+co.opmart van thanh	CO.OPMART VAN THANH
+co.opmart vinh loc b	CO.OPMART VINH LOC B
+co.opmart xa lo ha noi	CO.OPMART XA LO HA NOI
+co.opmart ba ria	CO.OPMART BA RIA
+co.opmart binh duong	CO.OPMART BINH DUONG
+co.opmart chau thanh	CO.OPMART CHAU THANH
+co.opmart dong phu	CO.OPMART DONG PHU
+co.opmart dong xoai	CO.OPMART DONG XOAI
+co.opmart duong minh chau	CO.OPMART DUONG MINH CHAU
+co.opmart phuoc dong	CO.OPMART PHUOC DONG
+co.opmart sca tay ninh	CO.OPMART SCA-TAY NINH
+co.opmart tan bien	CO.OPMART TAN BIEN
+co.opmart tan an	CO.OPMART TAN AN
+co.opmart tan chau	CO.OPMART TAN CHAU
+co.opmart tan thanh	CO.OPMART TAN THANH
+co.opmart tay ninh	CO.OPMART TAY NINH
+co.opmart trang bang	CO.OPMART TRANG BANG
+co.opmart bac giang	CO.OPMART BAC GIANG
+co.opmart ha dong	CO.OPMART HA DONG
+co.opmart hai phong	CO.OPMART HAI PHONG
+co.opmart nam dinh	CO.OPMART NAM DINH
+co.opmart sai gon	CO.OPMART SAI GON
+co.opmart sca goldensilk	CO.OPMART SCA-GOLDEN SILK
+co.opmart sca goldsilk	CO.OPMART SCA-GOLDSILK
+co.opmart sca long bien	CO.OPMART SCA-LONG BIEN
+co.opmart sca pham van chieu	CO.OPMART SCA-PHAM VAN CHIEU
+co.opmart sca victoria	CO.OPMART SCA-VICTORIA
+co.opmart thanh hoa	CO.OPMART THANH HOA
+co.opmart viet tri	CO.OPMART VIET TRI
+co.opmart vinh phuc	CO.OPMART VINH PHUC
+co.opmart an nhon	CO.OPMART AN NHON
+co.opmart cam ranh	CO.OPMART CAM RANH
+co.opmart da nang	CO.OPMART DA NANG
+co.opmart dong ha	CO.OPMART DONG HA
+co.opmart duc pho	CO.OPMART DUC PHO
+co.opmart ha tinh	CO.OPMART HA TINH
+co.opmart hue	CO.OPMART HUE
+co.opmart la gi	CO.OPMART LA GI
+co.opmart nha trang	CO.OPMART NHA TRANG
+co.opmart phan ri cua	CO.OPMART PHAN RI CUA
+co.opmart phan thiet	CO.OPMART PHAN THIET
+co.opmart quang binh	CO.OPMART QUANG BINH
+co.opmart quang ngai	CO.OPMART QUANG NGAI
+co.opmart quy nhon	CO.OPMART QUY NHON
+co.opmart son tra	CO.OPMART SON TRA
+co.opmart tam ky	CO.OPMART TAM KY
+co.opmart thanh ha	CO.OPMART THANH HA
+co.opmart bac lieu	CO.OPMART BAC LIEU
+co.opmart bac lieu 2	CO.OPMART BAC LIEU 2
+co.opmart binh thuy	CO.OPMART BINH THUY
+co.opmart cao lanh	CO.OPMART CAO LANH
+co.opmart chau doc	CO.OPMART CHAU DOC
+co.opmart duyen hai - tra vinh	CO.OPMART DUYEN HAI - TRA VINH
+co.opmart duyen hai	CO.OPMART DUYEN HAI
+co.opmart ha tien	CO.OPMART HA TIEN
+co.opmart hong ngu	CO.OPMART HONG NGU
+co.opmart kien giang	CO.OPMART KIEN GIANG
+co.opmart kien giang 2	CO.OPMART KIEN GIANG 2
+co.opmart long an	CO.OPMART LONG AN
+co.opmart long xuyen	CO.OPMART LONG XUYEN
+co.opmart my tho	CO.OPMART MY THO
+co.opmart nga bay hau giang	CO.OPMART NGA BAY HAU GIANG
+co.opmart sa dec	CO.OPMART SA DEC
+co.opmart soc trang	CO.OPMART SOC TRANG
+co.opmart thap muoi	CO.OPMART THAP MUOI
+co.opmart thoai son	CO.OPMART THOAI SON
+co.opmart thot not	CO.OPMART THOT NOT
+co.opmart tieu can	CO.OPMART TIEU CAN
+co.opmart tra vinh	CO.OPMART TRA VINH
+co.opmart bao loc	CO.OPMART BAO LOC
+co.opmart buon ho	CO.OPMART BUON HO
+co.opmart buon ma thuot	CO.OPMART BUON MA THUOT
+co.opmart chu se	CO.OPMART CHU SE
+co.opmart vinh long	CO.OPMART VINH LONG
+co.opmart cu m'gar	CO.OPMART CU M'GAR
+co.opmart dak nong	CO.OPMART DAK NONG
+co.opmart pleiku	CO.OPMART PLEIKU
+co.opmart kon tum	CO.OPMART KON TUM
+co.opmart tuy hoa	CO.OPMART TUY HOA
+co.opxtra tan phong	CO.OPXTRA TAN PHONG
+co.opxtra tan chau an giang	CO.OPXTRA TAN CHAU AN GIANG
+co.opxtra thap muoi	CO.OPXTRA THAP MUOI
+co.opxtra linh trung	CO.OPXTRA LINH TRUNG
+co.opxtra van hanh	CO.OPXTRA VAN HANH
+co.opxtra pham van dong	CO.OPXTRA PHAM VAN DONG
+co.opxtra tan phu	CO.OPXTRA TAN PHU
+co.opxtra premium	CO.OPXTRA PREMIUM
+co-opxtra tan phong	CO-OPXTRA TAN PHONG
+co-opxtra tan chau an giang	CO-OPXTRA TAN CHAU AN GIANG
+co-opxtra thap muoi	CO-OPXTRA THAP MUOI
+co-opxtra linh trung	CO-OPXTRA LINH TRUNG
+co-opxtra van hanh	CO-OPXTRA VAN HANH
+co-opxtra pham van dong	CO-OPXTRA PHAM VAN DONG
+co-opxtra tan phu	CO-OPXTRA TAN PHU
+co-opxtra premium	CO-OPXTRA PREMIUM
+co.opmart binh duong 2	CO.OPMART BINH DUONG 2
+co.opmart sca-hoang van thu	CO.OPMART SCA-HOANG VAN THU
+co.opmart sca-au co	CO.OPMART SCA-AU CO
+co.opmart sca-cao thang	CO.OPMART SCA-CAO THANG
+co.opmart sca-long bien	CO.OPMART SCA-LONG BIEN
+co.opmart sca-tay ninh	CO.OPMART SCA-TAY NINH
+co.opmart tan chau an giang	CO.OPMART TAN CHAU AN GIANG
+co.opmart tan bien tay ninh	CO.OPMART TAN BIEN TAY NINH
+co.opmart sca-victoria	CO.OPMART SCA-VICTORIA
+co.opmart sca-goldsilk	CO.OPMART SCA-GOLDSILK
+co.opmart chau thanh tay ninh	CO.OPMART CHAU THANH TAY NINH
+sieu thi a chau	SIEU THI A CHAU
+cong ty tnhh mtv tm & dv sai gon - phan rang	CONG TY TNHH MTV TM & DV SAI GON - PHAN RANG
+lien hiep hop tac xa thuong mai tp. ho chi minh	LIEN HIEP HOP TAC XA THUONG MAI TP. HO CHI MINH
+cn lien hiep htx thuong mai tp. ho chi minh coopmart hiep thanh	CN LIEN HIEP HTX THUONG MAI TP. HO CHI MINH COOPMART HIEP THANH

@@ -1,0 +1,41 @@
+115 Tây Sơn, Nguyễn Văn Cừ, Thành phố Quy Nhơn, Bình Định	HC Bình Định
+399 Phạm Văn Đồng, P. Xuân Đỉnh, Q. Bắc Từ Liêm, Tp. Hà Nội	HC 399 Phạm Văn Đồng
+549 Nguyễn Văn Cừ, P. Gia Thụy, Q. Long Biên, Tp. Hà Nội	HC Nguyễn Văn Cừ
+411 Tam Trinh, P. Hoàng Văn Thụ, Q. Hoàng Mai, Tp. Hà Nội	HC Tam Trinh
+102 Thái Thịnh, P. Trung Liệt, Q. Đống Đa, Tp. Hà Nội	HC Thái Thịnh
+Km 13 Lương Nỗ, Xã Tiên Dương, H. Đông Anh, Tp. Hà Nội	HC Đông Anh
+36B QL2, Xã Phù Lỗ, H. Sóc Sơn, Tp. Hà Nội	HC Sóc Sơn
+94 Hoàng Quốc Việt, P. Nghĩa Đô, Q. Cầu Giấy, Tp. Hà Nội	HC Hoàng Quốc Việt
+63 Vạn Phúc, P. Vạn Phúc, Q. Hà Đông, Tp. Hà Nội	HC Vạn Phúc
+765A Nguyễn Văn Linh, TT. Sài Đồng, Q. Long Biên, Tp. Hà Nội	HC Nguyễn Văn Linh
+56 Kim Đồng, P. Hợp Giang, Tp. Cao Bằng, T. Cao Bằng	HC Cao Bằng
+299 Lê Thái Tổ, P. Võ Cường, Tp. Bắc Ninh, T. Bắc Ninh	HC Bắc Ninh
+1610 đường Hùng Vương, P. Gia Cẩm, Tp. Việt Trì, T. Phú Thọ	HC Việt Trì
+354 Đường Thanh Niên kéo dài, P. Hải Tân, Tp. Hải Dương, T. Hải Dương	HC Hải Dương
+6 Hồng Bàng, P. Sở Dầu, Q. Hồng Bàng, Tp. Hải Phòng	HC Hải Phòng
+Km19 QL10, Xã Kiền Bái, H. Thủy Nguyên, Tp. Hải Phòng	HC Thủy Nguyên
+528 Lê Hồng Phong, P. Đằng Lâm, Q. Hải An, Tp. Hải Phòng	HC Hải An
+315 Cù Chính Lan, P. Đồng Tiến, Tp. Hòa Bình, T. Hòa Bình	HC Hòa Bình
+56 Nguyễn Văn Linh, P. An Tảo, Tp. Hưng Yên, T. Hưng Yên	HC Hưng Yên
+631 Trần Hưng Đạo, P. Lộc Vượng, Tp. Nam Định, T. Nam Định	HC Nam Định
+37 Lê Hồng Phong, P. Hưng Bình, Tp. Vinh, T. Nghệ An	HC Nghệ An
+283 Trần Hưng Đạo, P. Đông Thành, Tp. Ninh Bình, T. Ninh Bình	HC Ninh Bình
+69 Ngô Quyền, P. Vĩnh Trại, Tp. Lạng Sơn, T. Lạng Sơn	HC Lạng Sơn
+50 Quang Trung, P. Hải Đình, Tp. Đồng Hới, T. Quảng Bìn	HC Quảng Bình
+490 Nguyễn Văn Cừ, P. Hồng Hải, Tp. Hạ Long, T. Quảng Ninh	HC Quảng Ninh
+54 Lê Thanh Nghị, P. Cẩm Bình, Tp. Cẩm Phả, T. Quảng Ninh	HC Cẩm Phả
+59 Đặng Dung, P. Giếng Đáy, TP. Hạ Long, T. Quảng Ninh	HC Bãi Cháy
+6A Lê Thánh Tông, P. Hồng Gai, Tp. Hạ Long, T. Quảng Ninh	HC Hồng Gai
+1 Phan Bội Châu, Phường 1, Tp. Đông Hà, T. Quảng Trị	HC Quảng Trị
+297 Lý Bôn, P. Tiền Phong, Tp. Thái Bình, T. Thái Bình	HC Thái Bình
+282B Lương Ngọc Quyến, P. Quang Trung, Tp. Thái Nguyên, T. Thái Nguyên	HC Thái Nguyên
+1 Lê Hồng Phong, P. Bách Quang, Tp. Sông Công, T. Thái Nguyên	HC Sông Công
+88 Đại lộ Lê Lợi, P. Đông Hương, Tp. Thanh Hóa, T. Thanh Hóa	HC Thanh Hóa
+Đội 7, Xã Hoa Lộc, H. Hậu Lộc, T. Thanh Hóa	HC Hậu Lộc
+Tiểu khu 4, TT. Quán Lào, H. Yên Định, T. Thanh Hóa	HC Yên Định
+388 Bà Triệu, P. Bắc Sơn, Tp. Sầm Sơn, T. Thanh Hóa	HC Sầm Sơ
+Ngã 5 Gốc Vừng, Nguyễn Tất Thành, P. Liên Bảo, Tp. Vĩnh Yên, T. Vĩnh Phúc	HC Vĩnh Phúc
+Km 44 QL2, Xã Tân Tiến, H. Vĩnh Tường, T. Vĩnh Phúc	HC Vĩnh Tường
+1200 Lê Hồng Phong, P. Phước Long, Tp. Nha Trang, T. Khánh Hòa	HC Nha Trang
+801 Nguyễn Hữu Thọ, Khuê Trung, Cẩm Lệ, Đà Nẵng	HC Nguyễn Hữu Thọ
+216 Nguyễn Văn Linh, Thạc Gián, Thanh Khê, Đà Nẵng	HC Nguyễn Văn Linh

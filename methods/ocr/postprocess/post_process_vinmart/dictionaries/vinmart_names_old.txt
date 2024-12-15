@@ -1,0 +1,127 @@
+vm ha dong	VM Hà Đông
+vm thang long	VM Thăng Long
+vm royal city	VM Royal City
+vm trung hoa	VM Trung Hòa
+vm times city	VM Times City
+vm ninh binh	VM Ninh Bình
+vm ba trieu	VM Bà Triệu
+vm long bien	VM Long Biên
+vm van quan	VM Văn Quán
+vm ha long	VM Hạ Long
+vm hai phong	VM Hải Phòng
+vm nguyen chi thanh	VM Nguyễn Chí Thanh
+vm viet tri	VM Việt Trì
+vm dan phuong	VM Đan Phượng
+vm thai binh	VM Thái Bình
+vm hni tay ho	VM HNI Tây Hồ
+vm hoai duc	VM Hoài Đức
+vm pham ngoc thach	VM Phạm Ngọc Thạch
+vm bac tu liem	VM Bắc Từ Liêm
+vm vc+ hdg chi linh	VM VC+ HDG Chí Linh
+vm vcplz ybi yen bai	VM VCPLZ YBI Yên Bái
+vm vc+ tha tinh gia	VM VC+ THA Tĩnh Gia
+vm vcplz tqg tuyen quang	VM VCPLZ TQG Tuyên Quang
+vm vc+ hth ky anh	VM VC+ HTH Kỳ Anh
+vm vc+ qnh uong bi	VM VC+ QNH Uông Bí
+vm hni hoang cau	VM HNI Hoàng Cầu
+vm vc hni lieu giai	VM VC HNI Liễu Giai
+vm plz sla son la	VM PLZ SLA Sơn La
+vm vcplz tnn thai nguyen	VM VCPLZ TNN Thái Nguyên
+vm vcplz lsn lang son	VM VCPLZ LSN Lạng Sơn
+vm vcplz quang binh	VM VCPLZ Quảng Bình
+vm vcplz hnm ha nam	VM VCPLZ HNM Hà Nam
+vinmart thanh hoa	Vinmart Thanh Hóa
+vinmart gardenia	VinMart Gardenia
+vm vcplz htt ha tinh	VM VCPLZ HTT Hà Tĩnh
+vm vc+ nan nam dan	VM VC+ NAN Nam Đàn
+vm vcplz hpg imperia hai phong	VM VCPLZ HPG Imperia Hải Phòng
+vm vcplz bnh bac ninh	VM VCPLZ BNH Bắc Ninh
+vm vcplz hni skylake	VM VCPLZ HNI Skylake
+vm hni yen so	VM HNI Yên Sở
+vm hni cau giay	VM HNI Cầu Giấy
+vm vcc hni tran duy hung	VM VCC HNI Trần Duy Hưng
+vm vcplz qnh mong cai	VM VCPLZ QNH Móng Cái
+vm vcplz hbh hoa binh	VM VCPLZ HBH Hòa Bình
+vm vc+ pto phu tho	VM VC+ PTO Phú Thọ
+vm hni truc khe	VM HNI Trúc Khê
+vm hni truong dinh	VM HNI Trương Định
+vm hni doi can	VM HNI Đội Cấn
+vm hni vo thi sau	VM HNI Võ Thị Sáu
+vm hni nhat tan	VM HNI Nhật Tân
+vm hni ha dong	VM HNI Hà Đông
+vm hni le duc tho	VM HNI Lê Đức Thọ
+vm hni dai la	VM HNI Đại La
+vm hni thai thinh	VM HNI Thái Thịnh
+vm hni trung yen	VM HNI Trung Yên
+vm hni ly thai to	VM HNI Lý Thái Tổ
+vm hni xuan dieu	VM HNI Xuân Diệu
+vm hni la thanh	VM HNI La Thành
+vm hni trang an	VM HNI Tràng An
+vm hni truong chinh	VM HNI Trường Chinh
+vm hni linh dam	VM HNI Linh Đàm
+vm hni vu trong phung	VM HNI Vũ Trọng Phụng
+vm hni nguyen van cu ii	VM HNI Nguyễn Văn Cừ II
+vm hni thuy khue	VM HNI Thụy Khuê
+vm hni luong yen	VM HNI Lương Yên
+vm vcplz bkn bac kan	VM VCPLZ BKN Bắc Kạn
+vm vcplz qnh cam pha	VM VCPLZ QNH Cẩm Phả
+vm vc+ nan thai hoa	VM VC+ NAN Thái Hòa
+vm lcu lai chau	VM LCU Lai Châu
+vm bnh que vo	VM BNH Quế Võ
+vm quang trung	VM Quang Trung
+vm phan van tri	VM Phan Văn Trị
+vm cong hoa	VM Cộng Hòa
+vm da nang	VM Đà Nẵng
+vm plz tth hung vuong	VM PLZ TTH Hùng Vương
+vm kontum	VM Kontum
+vm pleiku	VM Pleiku
+vm buon me thuot	VM Buôn Mê Thuột
+vm ldg bao loc	VM LDG Bảo Lộc
+vm thu duc	VM Thủ Đức
+vm le van viet	VM Lê Văn Việt
+vm hcm belleza	VM HCM Belleza
+vm hcm  diamond	VM HCM  Diamond
+vm nha trang	VM Nha Trang
+vm plz pyn tuy hoa	VM PLZ PYN Tuy Hòa
+vm le thanh ton kha nha trang	VM Lê Thánh Tôn KHA Nha Trang
+vm cam ranh	VM Cam Ranh
+vm vcplz kha tran phu	VM VCPLZ KHA Trần Phú
+vm vc+ kha ninh hoa	VM VC+ KHA Ninh Hòa
+vm thao dien	VM Thảo Điền
+vm vc+ hcm pho quang	VM VC+ HCM Phổ Quang
+vm lan long an	VM LAN Long An
+vm ninh kieu	VM Ninh Kiều
+vm can tho	VM Cần Thơ
+vm blu bac lieu	VM BLU Bạc Liêu
+vm cto xuan khanh	VM CTO Xuân Khánh
+vm vc stg soc trang	VM VC STG Sóc Trăng
+vm long xuyen	VM Long Xuyên
+vm dtp vc+ sa dec	VM DTP VC+ Sa Đéc
+vm vc dtp cao lanh	VM VC DTP Cao Lãnh
+vm vcplz qni quang ngai	VM VCPLZ QNI Quảng Ngãi
+vm ninh thuan	VM Ninh Thuận
+vm my phuoc 1	VM Mỹ Phước 1
+vm bien hoa	VM Biên Hòa
+vm di an	VM Dĩ An
+vm dni long thanh	VM DNI Long Thành
+vm vcplz tnh tay ninh	VM VCPLZ TNH Tây Ninh
+vm vcplz bdg di an 2	VM VCPLZ BDG Dĩ An 2
+vm vcplz kgg rach gia	VM VCPLZ KGG Rạch Giá
+vm vcplz hgg vi thanh	VM VCPLZ HGG Vị Thanh
+vm vcplz cmu ca mau	VM VCPLZ CMU Cà Mau
+vm vcplz tvh tra vinh	VM VCPLZ TVH Trà Vinh
+vm vcplz vlg vinh long	VM VCPLZ VLG Vĩnh Long
+vm bau cat	VM Bàu Cát
+vm vcplz hcm sai gon res	VM VCPLZ HCM Sài Gòn Res
+vinmart landmark 81	Vinmart Landmark 81
+vm dong khoi	VM Đồng Khởi
+vm vc+ hcm nam long	VM VC+ HCM Nam Long
+vm hcm  sala	VM HCM  Sala
+vm hcm  new city	VM HCM  New City
+vm hcm hung phuc	VM HCM Hưng Phúc
+vm scenic	VM Scenic
+vm ba thang hai	VM Ba Tháng Hai
+vm binh trung	VM Bình Trưng
+vm nguyen duy trinh	VM Nguyễn Duy Trinh
+vm hcm hung gia	VM HCM Hưng Gia
+vm hcm trung son	VM HCM Trung Sơn

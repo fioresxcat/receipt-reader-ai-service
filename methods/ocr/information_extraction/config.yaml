@@ -1,0 +1,233 @@
+seven_eleven:
+  model_name: '711'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'receipt_id', 'time', 'total_discount_money', 'total_money', 'total_quantity']
+  
+
+aeon_citimart:
+  model_name: 'aeon_citimart'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money']
+  
+
+aeon:
+  model_name: 'aeon'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity']
+  
+
+bach_hoa_xanh:
+  model_name: 'bhx'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_original_money']
+
+bhx_2024:
+  model_name: 'bhx_2024'
+  label_list: ['text', 'date', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'pos_id', 'receipt_id', 'time', 'total_money']
+
+bitis:
+  model_name: 'bitis'
+  label_list: ['text', 'mart_name', 'receipt_id', 'date', 'time', 'product_name', 'product_unit_price', 'product_quantity', 'product_total_money', 'total_quantity', 'total_money', 'product_discount_retail_money', 'product_discount_wholesale_money', 'address']
+  
+bonchon:
+  model_name: 'bonchon'
+  label_list: ['text', 'date', 'mart_name', 'product_discount_money', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_original_money']
+
+old_bigc:
+  model_name: 'old_bigc'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_original_price', 'product_quantity', 'product_total_original_money', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_original_money', 'total_quantity']
+  
+
+brg:
+  model_name: 'brg'
+  label_list: ['text', 'date', 'mart_name', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'total_money']
+  
+circlek:
+  model_name: 'circlek'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_original_money', 'total_quantity']
+  
+coopfood:
+  model_name: 'coopfood'
+  label_list: ['text', 'barcode', 'date', 'mart_name', 'pos_id', 'product_id', 'product_name', 'product_original_price', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_quantity']
+  
+
+coopmart:
+  model_name: 'coopmart'
+  label_list: ['text', 'barcode', 'date', 'mart_address', 'mart_name', 'pos_id', 'product_id', 'product_name', 'product_original_price', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'receipt_tax_number', 'staff', 'time', 'total_money', 'total_quantity']
+  
+
+dmx:
+  model_name: 'dmx'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+  
+
+emart:
+  model_name: 'emart'
+  label_list: ['text', 'barcode', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_original_price', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_original_money', 'total_quantity']
+  
+
+fujimart:
+  model_name: 'fujimart'
+  label_list: ['text', 'date', 'mart_name', 'product_id', 'product_name', 'product_original_price', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'total_money', 'total_quantity']
+  
+
+gs25:
+  model_name: 'gs25'
+  label_list: ['text', 'date', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_original_price', 'product_quantity', 'product_total_money', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_original_money', 'total_quantity']
+  
+
+guardian:
+  model_name: 'guardian'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+  
+
+home_center:
+  model_name: 'hc'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'time', 'total_discount_money', 'total_money', 'total_original_money']
+  
+
+heineken:
+  model_name: 'heineken'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_original_money', 'total_money']
+
+heineken_2024:
+  model_name: 'heineken_2024'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_original_money', 'total_money']
+
+lamthao:
+  model_name: 'lamthao'
+  label_list: ['text', 'date', 'mart_name', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity']
+  
+
+lotte:
+  model_name: 'lotte'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time','total_discount_money', 'total_money', 'total_quantity']
+lotteria:
+  model_name: 'lotteria'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+
+mega:
+  model_name: 'mega'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity', 'store_id']
+  
+ministop:
+  model_name: 'ministop'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'pos_id', 'time', 'total_discount_money', 'total_money', 'total_original_money']
+
+new_bigc:
+  model_name: 'newbigc_go_top'
+  label_list: ['text', 'barcode', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity']
+
+new_gs25:
+  model_name: 'new_gs25'
+  label_list: ['text', 'date', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money']
+
+go:
+  model_name: 'newbigc_go_top'
+  label_list: ['text', 'barcode', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity']
+  
+
+top:
+  model_name: 'newbigc_go_top'
+  label_list: ['text', 'barcode', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity']
+  
+
+nguyenkim:
+  model_name: 'nguyenkim'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'store_id', 'time', 'total_money']
+  
+
+nova:
+  model_name: 'nova'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+
+nuty:
+  model_name: 'nuty'
+  label_list: ['text', 'date', 'mart_name', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'time', 'total_money', 'total_quantity']
+
+okono:
+  model_name: 'okono'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_original_money']
+
+pizza_company:
+  model_name: 'pizza_company'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'receipt_id', 'staff', 'time', 'total_money', 'total_original_money']
+
+
+satra:
+  model_name: 'satra'
+  label_list: ['text', 'barcode', 'date', 'mart_name', 'pos_id', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+  
+
+the_gioi_sua:
+  model_name: 'tgs'
+  label_list: ['text', 'date', 'mart_name', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+  
+
+the_gioi_skin_food:
+  model_name: 'thegioiskinfood'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'time', 'total_discount_money', 'total_money', 'total_original_money', 'total_quantity']
+  
+family_mart:
+  model_name: 'familymart'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money', 'total_original_money', 'total_quantity']
+  
+winmart:
+  model_name: 'winmart'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_discount_money', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_discount_money', 'total_money']
+  
+don_chicken:
+  model_name: 'don_chicken'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'receipt_id', 'second_product_name', 'staff', 'time', 'total_money', 'total_original_money']
+
+bhd:
+  model_name: 'bhd'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+ 
+kfc:
+  model_name: 'kfc'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_total_money', 'receipt_id', 'staff', 'time', 'total_money', 'total_original_money']
+  
+kingfood:
+  model_name: 'kingfood'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'time', 'total_money', 'total_quantity']
+
+galaxy_cinema:
+  model_name: 'galaxy_cinema'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+
+pepper_lunch:
+  model_name: 'pepper_lunch'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+
+cheers:
+  model_name: 'cheers'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money', 'total_quantity']
+
+bsmart:
+  model_name: 'bsmart'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+
+lotte_cinema:
+  model_name: 'lotte_cinema'
+  label_list: ['text', 'date', 'mart_name', 'pos_id', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'receipt_id', 'staff', 'time', 'total_money']
+
+globalx:
+  model_name: 'globalx'
+  label_list: ['text', 'date', 'mart_name', 'product_name', 'product_quantity', 'product_total_money', 'receipt_id', 'staff', 'time', 'total_money', 'total_original_money']
+
+sukiya:
+  model_name: 'sukiya'
+  label_list: ['text', 'receipt_id', 'pos_id', 'date', 'time', 'product_name', 'product_quantity', 'product_total_money','total_money']
+
+launuongmai:
+  model_name: 'launuongmai'
+  label_list: ['text', 'mart_address', 'receipt_id', 'date', 'time', 'product_name', 'product_quantity', 'product_unit_price', 'product_total_money', 'total_original_money','total_money']
+
+tiemlaunho:
+  model_name: 'tiemlaunho'
+  label_list: ['text', 'mart_address', 'receipt_id', 'date', 'time', 'staff', 'product_name', 'product_quantity', 'product_unit_price', 'product_total_money', 'total_original_money','total_money']
+
+sayaka:
+  model_name: 'sayaka'
+  label_list: ['text', 'mart_name', 'receipt_id', 'date', 'time', 'product_name', 'product_quantity', 'product_total_money', 'product_unit_price', 'total_discount_money', 'total_money', 'total_original_money']
+
+umyoshi:
+  model_name: 'umyoshi'
+  label_list: ['text', 'mart_name', 'receipt_id', 'date', 'staff', 'time', 'product_name', 'product_quantity', 'product_total_money', 'total_money', 'total_original_money']
