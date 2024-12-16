@@ -10,13 +10,11 @@ from bpemb import BPEmb
 from .utils import *
 from utils.utils import total_time, load_yaml
 from modules.base_module import BaseModule
-
+from .lmv3_predictor import LayoutLMv3Predictor
 
 class BaseInformationExtractor(BaseModule):
-    def __init__(self, common_config, model_config, word_encoder, label_list, use_emb=True, emb_range=640):
+    def __init__(self, common_config, model_config, label_list):
         super(BaseInformationExtractor, self).__init__(common_config, model_config)
-        self.word_encoder = word_encoder
-        self.label_list = label_list
         self.general_fields = ['mart_name', 'tax_code', 'date', 'receipt_id', 'pos_id', 'staff', 'time', 'total_money', 'total_quantity', 'total_original_money', 'total_discount_money', 'barcode', 'mart_address', 'receipt_tax_number']
         self.product_fields = ['product_id', 'product_name', 'product_vat', 'product_quantity', 'product_unit_price', 'product_total_money', 'product_original_price', 'product_discount_money', 'product_total_original_money', 'product_discount_retail_money', 'product_discount_wholesale_money', 'second_product_name']
         # self.general_fields = []
@@ -27,8 +25,7 @@ class BaseInformationExtractor(BaseModule):
         # for field in ['product_id', 'product_name', 'product_vat', 'product_quantity', 'product_unit_price', 'product_total_money', 'product_original_price', 'product_discount_money']:
         #     if field in self.label_list:
         #         self.product_fields.append(field)
-        self.use_emb = use_emb
-        self.emb_range = emb_range
+        self.lmv3 = LayoutLMv3Predictor(common_config, model_config, label_list)
 
     
     def get_sort_data(self, bbs, list_boxes, texts, cands):
@@ -157,9 +154,11 @@ class BaseInformationExtractor(BaseModule):
         product_list_boxes = []
         current_product_cand = None
         last_row_index = -1
+        bb_index = 0
         for row_index, rbb in enumerate(rbbs):
             for bb in rbb:
-                fieldname = labels[bbs2idx_sorted[bb]]
+                # fieldname = labels[bbs2idx_sorted[bb]]
+                fieldname = labels[bb_index][0]
                 if fieldname in self.product_fields:
                     if fieldname == field_start and row_index - last_row_index > row_threshold and current_product_cand is not None:
                         products_cand.append(current_product_cand)
@@ -193,6 +192,7 @@ class BaseInformationExtractor(BaseModule):
                         products_cand[-1][fieldname].append(bb2cand[bb])
                         products_text[-1][fieldname].append(bb2text[bb])
                         product_list_boxes[-1][fieldname].append(bb2list_boxes[bb])
+                bb_index += 1
         if current_product_cand is not None:
             products_cand.append(current_product_cand)
             products_text.append(current_product_text)
@@ -208,9 +208,11 @@ class BaseInformationExtractor(BaseModule):
         products_text = []
         product_list_boxes = []
         current_product_cand = None
+        bb_index = 0
         for rbb in rbbs:
             for bb in rbb:
-                fieldname = labels[bbs2idx_sorted[bb]]
+                # fieldname = labels[bbs2idx_sorted[bb]]
+                fieldname = labels[bb_index][0]
                 if fieldname in self.product_fields:
                     if fieldname == field_start:
                         if current_product_cand is not None:
@@ -225,9 +227,11 @@ class BaseInformationExtractor(BaseModule):
                             current_product_text[field] = []
                             current_product_list_boxes[field] = []
                     if current_product_cand is not None:
+
                         current_product_cand[fieldname].append(bb2cand[bb])
                         current_product_text[fieldname].append(bb2text[bb])
                         current_product_list_boxes[fieldname].append(bb2list_boxes[bb])
+                bb_index += 1
         if current_product_cand is not None:
             products_cand.append(current_product_cand)
             products_text.append(current_product_text)
@@ -246,9 +250,11 @@ class BaseInformationExtractor(BaseModule):
         products_text = []
         product_list_boxes = []
         start, end = None, None
+        bb_index = 0
         for row_index, rbb in enumerate(rbbs):
             for bb in rbb:
-                fieldname = labels[bbs2idx_sorted[bb]]
+                # fieldname = labels[bbs2idx_sorted[bb]]
+                fieldname = labels[bb_index][0]
                 if fieldname in self.product_fields:
                     if fieldname == field_start:
                         if start is None:
@@ -262,7 +268,7 @@ class BaseInformationExtractor(BaseModule):
                             product_list_boxes.append(current_product_list_boxes)
                             start = end
                             end = None
-                        
+                bb_index += 1
         current_product_cand, current_product_text, current_product_list_boxes = self.group_product(bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs[start:], labels, max_row)
         products_cand.append(current_product_cand)
         products_text.append(current_product_text)
@@ -284,13 +290,15 @@ class BaseInformationExtractor(BaseModule):
         product_name_texts = []
         product_name_list_boxes = []
         product_name_bbs = []
+        bb_index = 0
         for rbb in rbbs:
             product_name_line_cands = []
             product_name_line_texts = []
             product_name_line_list_boxes = []
             product_name_line_bbs = []
             for bb in rbb:
-                fieldname = labels[bbs2idx_sorted[bb]]
+                # fieldname = labels[bbs2idx_sorted[bb]]
+                fieldname = labels[bb_index][0]
                 if fieldname == 'product_name':
                     product_name_line_cands.append(bb2cand[bb])
                     product_name_line_texts.append(bb2text[bb])
@@ -318,6 +326,7 @@ class BaseInformationExtractor(BaseModule):
                         current_product_text[fieldname].append(bb2text[bb])
                         current_product_list_boxes[fieldname].append(bb2list_boxes[bb])
                         current_product_bb[fieldname].append(bb)
+                bb_index += 1
             if len(product_name_line_cands) != 0:
                 product_name_cands.append(product_name_line_cands)
                 product_name_texts.append(product_name_line_texts)
@@ -385,17 +394,26 @@ class BaseInformationExtractor(BaseModule):
             raw_result[field] = []
             raw_text[field] = []
             raw_list_box[field] = []
-        for rbb in rbbs:
-            for bb in rbb:
-                fieldname = labels[bbs2idx_sorted[bb]]
-                if fieldname in self.general_fields:
-                    raw_result[fieldname].append(bb2cand[bb])
-                    raw_text[fieldname].append(bb2text[bb])
-                    raw_list_box[fieldname].append(bb2list_boxes[bb])
-        # get products
+
+        sorted_bbs = [bb for row in rbbs for bb in row]
+        for index, (bb, (fieldname, prob)) in enumerate(zip(sorted_bbs, labels)):
+            if fieldname in self.general_fields:
+                raw_result[fieldname].append(bb2cand[bb])
+                raw_text[fieldname].append(bb2text[bb])
+                raw_list_box[fieldname].append(bb2list_boxes[bb])
+    
+        # for rbb in rbbs:
+        #     for bb in rbb:
+        #         fieldname = labels[bbs2idx_sorted[bb]]
+        #         if fieldname in self.general_fields:
+        #             raw_result[fieldname].append(bb2cand[bb])
+        #             raw_text[fieldname].append(bb2text[bb])
+        #             raw_list_box[fieldname].append(bb2list_boxes[bb])
+    
+        # # get products
         if receipt_type in ['aeon', 'bhx', 'dmx', 'gs25', 'hc', 'heineken', 'lamthao', 'nova', 'nuty', 'satra', 'tgs', 'tgsf', 'new_gs25', 'ministop', 'emart', 'circlek', 'lotteria', 'bhd', 'cheers', 'bhx_2024', 'kingfood', 'tiemlaunho', 'sayaka']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_quantity', 'product_unit_price'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['go', 'topmarket', 'new_bigc', 'family_mart']:
+        elif receipt_type in ['go', 'topmarket', 'new_bigc', 'family_mart', 'newbigc_go_top']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
         elif receipt_type in ['lotte']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money', 'product_total_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
@@ -403,7 +421,7 @@ class BaseInformationExtractor(BaseModule):
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type2('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
         elif receipt_type in ['brg', 'coopmart', 'fujimart', 'guardian', 'mega', 'coopfood', 'bsmart']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type2('product_id', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['aeoncitimart', 'vinmart', 'vinmartplus', 'winlife']:
+        elif receipt_type in ['aeoncitimart', 'vinmart', 'vinmartplus', 'winlife', 'winmart_combined']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
         elif receipt_type in ['nguyenkim']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_quantity', ['product_unit_price', 'product_total_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
@@ -432,6 +450,9 @@ class BaseInformationExtractor(BaseModule):
         elif receipt_type in ['launuongmai']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type4('product_unit_price', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
 
+        elif receipt_type == 'receipt':
+            pass
+
         return raw_result, raw_text, raw_list_box
         
 
@@ -447,11 +468,23 @@ class BaseInformationExtractor(BaseModule):
         for i in range(len(inp_data['list_bbs'])):
             if len(inp_data['list_bbs'][i]) > 1:
                 bb2text, bb2cand, bb2list_boxes, rbbs, bbs2idx_sorted, sorted_indices = self.get_sort_data(inp_data['list_bbs'][i], inp_data['list_list_boxes'][i], inp_data['list_raw_words'][i], inp_data['list_raw_cands'][i])
-                x_indexes, y_indexes, text_features, edge_index, edge_type = self.get_input(inp_data['rotated_images'][i], bb2text, rbbs, bbs2idx_sorted, sorted_indices)
-                output_dict = self.request_multi([x_indexes, y_indexes, text_features, edge_index, edge_type])
-                output = np.array(output_dict.as_numpy(self.model_config['output_name']))
-                labels = [self.label_list[i] for i in np.argmax(output, axis=1)]
+                
+                # x_indexes, y_indexes, text_features, edge_index, edge_type = self.get_input(inp_data['rotated_images'][i], bb2text, rbbs, bbs2idx_sorted, sorted_indices)
+                # output_dict = self.request_multi([x_indexes, y_indexes, text_features, edge_index, edge_type])
+                # output = np.array(output_dict.as_numpy(self.model_config['output_name']))
+
+                sorted_bbs = [bb for row in rbbs for bb in row]
+                sorted_bbs_raw = [np.array(bb).reshape(4, 2) for bb in sorted_bbs]
+                sorted_texts = [bb2text[bb] for bb in sorted_bbs]
+                image = inp_data['rotated_images'][i]
+                labels = self.lmv3.predict_page_prob(image, sorted_bbs_raw, sorted_texts)
+
+                # # labels list for all boxes
+                # labels = [self.label_list[i] for i in np.argmax(output, axis=1)]
+
                 raw_result, raw_text, raw_list_box = self.get_raw_result(inp_data['mart_type'], bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
+                pdb.set_trace()
+                
                 inp_data['list_raw_result'].append(raw_result)
                 inp_data['list_raw_text'].append(raw_text)
                 inp_data['list_raw_list_box'].append(raw_list_box)

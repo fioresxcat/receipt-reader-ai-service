@@ -1,661 +1,145 @@
-receipt_classification:
-    model_spec_name: SCANIT_receipt_classification
-    model_spec_version: 212024080401001
-    input_shape: [512, 256, 3]
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    request_timeout: 60.0
+triton_models:
+    general_ocr:
+        model_spec_name: SCANIT_general_ocr
+        model_spec_version: 72024010301003
+        input_shape: [40, 416, 3]
+        input_name: input
+        input_type: FP32
+        output_name: output
+        charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
+        # charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $"
+        max_batch_size: 16
+        request_timeout: 60.0
+
+
+    text_detection:
+        model_spec_name: SCANIT_text_detection
+        model_spec_version: 72024041501004
+        input_name: input
+        input_type: UINT8
+        output_name: output
+        box_thresh: 0.5
+        p_thresh: 0.3
+        unclip_ratio: 1.6
+        request_timeout: 60.0
+
+
+    receipt_information_extraction:
+        model_spec_name: SCANIT_information_extraction
+        model_spec_version: 72024041501004
+        input_name: [input_ids, bbox, attention_mask, pixel_values]
+        input_type: [INT64, INT64, INT64, FP32]
+        output_name: output
+        model_dir: models_receipt
+        request_timeout: 60.0
+
+
+vllm_models:
+    base-model:
+        base_model_name: Qwen2.5-1.5B-instruct
+        lora_name: /models/Qwen2.5-1.5B-Instruct
+        max_tokens: 8192
+        temperature: 0
+        top_p: 1
+    receipt-lora:
+        base_model_name: Qwen2.5-1.5B-Instruct
+        lora_name: /data/tungtx2/receipt-models-vllm/loras/Qwen2.5-1.5B-Instruct/dunglt5_gotit_data_v3_lora_64_checkpoint-1900
+        max_tokens: 4096
+        temperature: 0
+        top_p: 1
+
+
+# receipt_classification:
+#     model_spec_name: SCANIT_receipt_classification
+#     model_spec_version: 212024080401001
+#     input_shape: [512, 256, 3]
+#     input_name: input
+#     input_type: UINT8
+#     output_name: output
+#     request_timeout: 60.0
+
 
 # corner_detection:
 #     model_spec_name: SCANIT_corner_detection
-#     model_spec_version: 22023091801002
-#     input_shape: [640, 640, 3]
-#     input_name: images
+#     model_spec_version: 42023111001002
+#     input_shape: [512, 512, 3]
+#     input_name: input
 #     input_type: FP32
-#     output_name: output0
-#     conf_threshold: 0.5
-#     iou_threshold: 0.7
+#     output_name: output
+#     num_point: 4
 #     request_timeout: 60.0
 
-corner_detection:
-    model_spec_name: SCANIT_corner_detection
-    model_spec_version: 42023111001002
-    input_shape: [512, 512, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    num_point: 4
-    request_timeout: 60.0
 
-general_ocr:
-    model_spec_name: SCANIT_general_ocr
-    model_spec_version: 72024010301003
-    input_shape: [40, 416, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
-    # charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $"
-    max_batch_size: 16
-    request_timeout: 60.0
     
-barcode_ocr:
-    model_spec_name: SCANIT_barcode_ocr
-    model_spec_version: 12024022901013
-    input_shape: [40, 416, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
-    # charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $"
-    max_batch_size: 1
-    request_timeout: 60.0
+# barcode_ocr:
+#     model_spec_name: SCANIT_barcode_ocr
+#     model_spec_version: 12024022901013
+#     input_shape: [40, 416, 3]
+#     input_name: input
+#     input_type: FP32
+#     output_name: output
+#     charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
+#     # charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $"
+#     max_batch_size: 1
+#     request_timeout: 60.0
 
-text_detection:
-    model_spec_name: SCANIT_text_detection
-    model_spec_version: 72024041501004
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    box_thresh: 0.5
-    p_thresh: 0.3
-    unclip_ratio: 1.6
-    request_timeout: 60.0
 
-spam_detection:
-    model_spec_name: SCANIT_spam_detection
-    model_spec_version: 72024080501005
-    input_shape: [256, 256, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    request_timeout: 60.0
 
-receipt_rotation:
-    model_spec_name: SCANIT_receipt_rotation
-    model_spec_version: 32023091801006
-    input_shape: [512, 512, 3]
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    request_timeout: 60.0
+# spam_detection:
+#     model_spec_name: SCANIT_spam_detection
+#     model_spec_version: 72024080501005
+#     input_shape: [256, 256, 3]
+#     input_name: input
+#     input_type: FP32
+#     output_name: output
+#     request_timeout: 60.0
 
-fold_cut_pair_detection:
-    model_spec_name: SCANIT_fold_cut_pair_detection
-    model_spec_version: 12023081401007
-    input_shape: [640, 640, 3]
-    input_name: images
-    input_type: UINT8
-    output_name: output0
-    conf_threshold: 0.6
-    iou_threshold: 0.5
-    request_timeout: 60.0
+# receipt_rotation:
+#     model_spec_name: SCANIT_receipt_rotation
+#     model_spec_version: 32023091801006
+#     input_shape: [512, 512, 3]
+#     input_name: input
+#     input_type: UINT8
+#     output_name: output
+#     request_timeout: 60.0
 
-fraud_device_detection:
-    model_spec_name: SCANIT_fraud_device_detection
-    model_spec_version: 12023082101008
-    input_shape: [224, 224, 3]
-    input_name: input_1
-    input_type: FP32
-    output_name: dense
-    threshold: 0.08
-    request_timeout: 60.0
+# fold_cut_pair_detection:
+#     model_spec_name: SCANIT_fold_cut_pair_detection
+#     model_spec_version: 12023081401007
+#     input_shape: [640, 640, 3]
+#     input_name: images
+#     input_type: UINT8
+#     output_name: output0
+#     conf_threshold: 0.6
+#     iou_threshold: 0.5
+#     request_timeout: 60.0
 
-fraud_texture_detection:
-    model_spec_name: SCANIT_fraud_texture_detection
-    model_spec_version: 32024070801009
-    input_shape: [512, 512, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    threshold: 0.2
-    max_batch_size: 3
-    request_timeout: 60.0
+# fraud_device_detection:
+#     model_spec_name: SCANIT_fraud_device_detection
+#     model_spec_version: 12023082101008
+#     input_shape: [224, 224, 3]
+#     input_name: input_1
+#     input_type: FP32
+#     output_name: dense
+#     threshold: 0.08
+#     request_timeout: 60.0
 
-receipt_angle_estimation:
-    model_spec_name: SCANIT_receipt_angle_estimation
-    model_spec_version: 12023082101010
-    input_shape: [512, 128, 3]
-    input_name: input_1
-    input_type: FP32
-    output_name: tf_op_layer_Mul
-    request_timeout: 60.0
-    
-blur_detection:
-    model_spec_name: SCANIT_blur_detection
-    model_spec_version: 32024012101011
-    input_shape: [640, 256, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    request_timeout: 60.0
-    threshold: 0.995
-    
-fraud_hand_written_detection:
-    model_spec_name: SCANIT_fraud_hand_written_detection
-    model_spec_version: 22024031801012
-    input_shape: [8, 3, 32, 192]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    threshold: 0.028
-    max_batch_size: 4
-    request_timeout: 60.0
-    
-a4_corner_detection:
-    model_spec_name: SCANIT_a4_corner_detection
-    model_spec_version: 22024080401014
-    input_shape: [640, 640, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    num_point: 4
-    request_timeout: 60.0
-    
-a4_classification:
-    model_spec_name: SCANIT_a4_classification
-    model_spec_version: 42024080501015
-    input_shape: [252, 252, 3]
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    request_timeout: 60.0
+# fraud_texture_detection:
+#     model_spec_name: SCANIT_fraud_texture_detection
+#     model_spec_version: 32024070801009
+#     input_shape: [512, 512, 3]
+#     input_name: input
+#     input_type: FP32
+#     output_name: output
+#     threshold: 0.2
+#     max_batch_size: 3
+#     request_timeout: 60.0
 
-a4_rotation:
-    model_spec_name: SCANIT_a4_rotation
-    model_spec_version: 12024061101016
-    input_shape: [480, 480, 3]
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    request_timeout: 60.0
-
-a4_angle_estimation:
-    model_spec_name: SCANIT_a4_angle_estimation
-    model_spec_version: 12024061101017
-    input_shape: [480, 480, 3]
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    request_timeout: 60.0
-
-vat_ocr:
-    model_spec_name: SCANIT_vat_ocr
-    model_spec_version: 12024070301018
-    input_shape: [40, 416, 3]
-    input_name: input
-    input_type: FP32
-    output_name: output
-    # charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
-    charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $%"
-    max_batch_size: 8
-    request_timeout: 60.0
-    
-text_detection_vat:
-    model_spec_name: SCANIT_text_detection_vat
-    model_spec_version: 12024072201019
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    box_thresh: 0.5
-    p_thresh: 0.3
-    unclip_ratio: 1.6
-    request_timeout: 60.0
-    
-vat_classification:
-    model_spec_name: SCANIT_vat_classification
-    model_spec_version: 32024080601020
-    input_shape: [512, 256, 3]
-    input_name: input
-    input_type: UINT8
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_bhx:
-    model_spec_name: SCANIT_information_extraction_bhx
-    model_spec_version: 32023091801050
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_lotte:
-    model_spec_name: SCANIT_information_extraction_lotte
-    model_spec_version: 42023122601051
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_lamthao:
-    model_spec_name: SCANIT_information_extraction_lamthao
-    model_spec_version: 32023091801052
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_nguyenkim:
-    model_spec_name: SCANIT_information_extraction_nguyenkim
-    model_spec_version: 22023082301053
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_tgs:
-    model_spec_name: SCANIT_information_extraction_tgs
-    model_spec_version: 22023082301054
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_hc:
-    model_spec_name: SCANIT_information_extraction_hc
-    model_spec_version: 22023082301055
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_satra:
-    model_spec_name: SCANIT_information_extraction_satra
-    model_spec_version: 32024030701056
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_aeon_citimart:
-    model_spec_name: SCANIT_information_extraction_aeon_citimart
-    model_spec_version: 32024010301057
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_gs25:
-    model_spec_name: SCANIT_information_extraction_gs25
-    model_spec_version: 22023082301058
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_emart:
-    model_spec_name: SCANIT_information_extraction_emart
-    model_spec_version: 62024041501059
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_winmart:
-    model_spec_name: SCANIT_information_extraction_winmart
-    model_spec_version: 42024062801060
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_coopmart:
-    model_spec_name: SCANIT_information_extraction_coopmart
-    model_spec_version: 122024060501061
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_thegioiskinfood:
-    model_spec_name: SCANIT_information_extraction_thegioiskinfood
-    model_spec_version: 22023082301062
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_nuty:
-    model_spec_name: SCANIT_information_extraction_nuty
-    model_spec_version: 22023082301063
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_brg:
-    model_spec_name: SCANIT_information_extraction_brg
-    model_spec_version: 32024010301064
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_dmx:
-    model_spec_name: SCANIT_information_extraction_dmx
-    model_spec_version: 22023082301065
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_heineken:
-    model_spec_name: SCANIT_information_extraction_heineken
-    model_spec_version: 32023121301066
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_fujimart:
-    model_spec_name: SCANIT_information_extraction_fujimart
-    model_spec_version: 32023122601067
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_guardian:
-    model_spec_name: SCANIT_information_extraction_guardian
-    model_spec_version: 42024010301068
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_newbigc_go_top:
-    model_spec_name: SCANIT_information_extraction_newbigc_go_top
-    model_spec_version: 72024030701069
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_mega:
-    model_spec_name: SCANIT_information_extraction_mega
-    model_spec_version: 42023121301070
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_711:
-    model_spec_name: SCANIT_information_extraction_711
-    model_spec_version: 32023102601071
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_aeon:
-    model_spec_name: SCANIT_information_extraction_aeon
-    model_spec_version: 22023082301072
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_old_bigc:
-    model_spec_name: SCANIT_information_extraction_old_bigc
-    model_spec_version: 32023082501073
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_nova:
-    model_spec_name: SCANIT_information_extraction_nova
-    model_spec_version: 32024010301074
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_bitis:
-    model_spec_name: SCANIT_information_extraction_bitis
-    model_spec_version: 42023082701074
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_coopfood:
-    model_spec_name: SCANIT_information_extraction_coopfood
-    model_spec_version: 32024030701075
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_new_gs25:
-    model_spec_name: SCANIT_information_extraction_new_gs25
-    model_spec_version: 22024041701076
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_ministop:
-    model_spec_name: SCANIT_information_extraction_ministop
-    model_spec_version: 12023101601077
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_circlek:
-    model_spec_name: SCANIT_information_extraction_circlek
-    model_spec_version: 22024010301078
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_familymart:
-    model_spec_name: SCANIT_information_extraction_familymart
-    model_spec_version: 12023101801079
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_don_chicken:
-    model_spec_name: SCANIT_information_extraction_don_chicken
-    model_spec_version: 22024051501080
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_pizza_company:
-    model_spec_name: SCANIT_information_extraction_pizza_company
-    model_spec_version: 12023101801081
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_bhd:
-    model_spec_name: SCANIT_information_extraction_bhd
-    model_spec_version: 12023102401082
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_lotteria:
-    model_spec_name: SCANIT_information_extraction_lotteria
-    model_spec_version: 12023102401083
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_kfc:
-    model_spec_name: SCANIT_information_extraction_kfc
-    model_spec_version: 22023121801084
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_galaxy_cinema:
-    model_spec_name: SCANIT_information_extraction_galaxy_cinema
-    model_spec_version: 22024010301085
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_okono:
-    model_spec_name: SCANIT_information_extraction_okono
-    model_spec_version: 12023102401086
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_cheers:
-    model_spec_name: SCANIT_information_extraction_cheers
-    model_spec_version: 12023102401087
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_pepper_lunch:
-    model_spec_name: SCANIT_information_extraction_pepper_lunch
-    model_spec_version: 12023102401088
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_bsmart:
-    model_spec_name: SCANIT_information_extraction_bsmart
-    model_spec_version: 32024010301089
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_lotte_cinema:
-    model_spec_name: SCANIT_information_extraction_lotte_cinema
-    model_spec_version: 12023102601090
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_bonchon:
-    model_spec_name: SCANIT_information_extraction_bonchon
-    model_spec_version: 12023111201091
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_heineken_2024:
-    model_spec_name: SCANIT_information_extraction_heineken_2024
-    model_spec_version: 12023122501092
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_kingfood:
-    model_spec_name: SCANIT_information_extraction_kingfood
-    model_spec_version: 12024032801093
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_bhx_2024:
-    model_spec_name: SCANIT_information_extraction_bhx_2024
-    model_spec_version: 12024032801094
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_globalx:
-    model_spec_name: SCANIT_information_extraction_globalx
-    model_spec_version: 22024061701095
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_sukiya:
-    model_spec_name: SCANIT_information_extraction_sukiya
-    model_spec_version: 12024051501096
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_omnigo:
-    model_spec_name: SCANIT_information_extraction_omnigo
-    model_spec_version: 12024051501097
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_vat_caophong:
-    model_spec_name: SCANIT_information_extraction_vat_caophong
-    model_spec_version: 22024072701098
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_launuongmai:
-    model_spec_name: SCANIT_information_extraction_launuongmai
-    model_spec_version: 12024061401099
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_tiemlaunho:
-    model_spec_name: SCANIT_information_extraction_tiemlaunho
-    model_spec_version: 12024061401100
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_sayaka:
-    model_spec_name: SCANIT_information_extraction_sayaka
-    model_spec_version: 12024061701101
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-
-information_extraction_umyoshi:
-    model_spec_name: SCANIT_information_extraction_ushimania_yoshinoya
-    model_spec_version: 12024061701102
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_vat_thegioididong:
-    model_spec_name: SCANIT_information_extraction_vat_thegioididong
-    model_spec_version: 12024061201103
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
-    
-information_extraction_vat_nguyenkim:
-    model_spec_name: SCANIT_information_extraction_vat_nguyenkim
-    model_spec_version: 12024061201104
-    input_name: [x_indexes, y_indexes, text_features, edge_index, edge_type]
-    input_type: [INT32, INT32, FP32, INT64, INT32]
-    output_name: output
-    request_timeout: 60.0
+# receipt_angle_estimation:
+#     model_spec_name: SCANIT_receipt_angle_estimation
+#     model_spec_version: 12023082101010
+#     input_shape: [512, 128, 3]
+#     input_name: input_1
+#     input_type: FP32
+#     output_name: tf_op_layer_Mul
+#     request_timeout: 60.0

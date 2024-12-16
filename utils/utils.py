@@ -38,7 +38,8 @@ def list_base64_to_images(list_string_bytes):
 
 
 def load_yaml(yaml_path):
-    data = yaml.load(open(yaml_path, 'r'))
+    with open(yaml_path, 'r') as f:
+        data = yaml.load(f, Loader=yaml.FullLoader)
     return data
 
 

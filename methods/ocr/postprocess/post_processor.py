@@ -146,6 +146,7 @@ class PostProcessor(BaseModule):
         inp_data = inp.get_data()
         inp_data['result'] = {}
         result = self.post_processor[inp_data['mart_type']].predict(request_id, inp_data)
+        pdb.set_trace()
         metadata = self.add_metadata(metadata, 1, 1)
         result['result']['type'] = inp_data['mart_type']
         if result['result']['type'] in ['vinmart', 'vinmartplus']:
