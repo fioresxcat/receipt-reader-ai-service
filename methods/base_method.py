@@ -23,7 +23,7 @@ class BaseMethod(object):
                 }
             out, metadata = module.predict(request_id, inp, out, metadata)
             # end whole process if 1 module gets error or force quit=true and hit rule check
-            if out.error['error_code'] != 0 or (self.force_quit==1 and len(out.get_data()['rule_code']) != 0):
+            if out.error['error_code'] != 0:
                 if self.debugger is not None:
                     try:
                         self.debugger.log_module(str(request_id), inp, out, module.__class__.__name__)

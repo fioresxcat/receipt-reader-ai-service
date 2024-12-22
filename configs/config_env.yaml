@@ -18,4 +18,8 @@ redis: # config of redisdb
     time_to_expire_s: ${REDIS_TIME_TO_EXPIRE} # expire time of key-value insert to db, calculated in seconds
     is_cluster: ${REDIS_IS_CLUSTER} # 0 if redis, 1 if redis-cluster
     
-    
+
+vllm_server: # config of vllm server
+    ip: ${AIHN_VLLM_HOST}    # ip of vllm server
+    port: ${AIHN_VLLM_PORT}  # port of vllm server
+    api_key: ${AIHN_VLLM_API_KEY}  # port of vllm server

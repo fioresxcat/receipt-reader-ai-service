@@ -1,4 +1,5 @@
 use_methods:
     AppCheck: false
     OCR: true
+    OCR_LLM: true
     OCRA4: false

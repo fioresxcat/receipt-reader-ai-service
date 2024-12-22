@@ -5,7 +5,7 @@ import math
 import numpy as np
 
 from utils.utils import total_time
-from modules.base import BaseModule
+from modules.base_module import BaseModule
 
 
 def max_left(bb):
@@ -99,8 +99,11 @@ class DocumentGenerator(BaseModule):
                         pass
                     elif pad > -0.2:
                         line_text.append(' ' * max(math.ceil(pad), 1))
-                    if re.search('^[\.|\,]', texts[i]) is not None and len(line_text) >= 2 and line_text[-1] == ' ' and line_text[-2] != ' ' is not None:
-                        line_text = line_text[:-1]
+                    try:
+                        if re.search('^[\.|\,]', texts[i]) is not None and len(line_text) >= 2 and line_text[-1] == ' ' and line_text[-2] != ' ' is not None:
+                            line_text = line_text[:-1]
+                    except:
+                        pdb.set_trace()
                     line_text.append(texts[i])
                 page_texts.append(''.join(line_text))
             page_texts = '\n'.join(page_texts)

@@ -22,7 +22,7 @@ from typing import Optional, Literal, Dict, Any, List
 
 class ProductInfo(BaseModel):
     product_name: str = Field(description="""Tên của sản phẩm/mặt hàng.""")
-    product_code: str = Field(description="""Mã SKU của sản phẩm/mặt hàng.""")
+    product_id: str = Field(description="""Mã SKU của sản phẩm/mặt hàng.""")
     product_quantity: str = Field(description="""Số lượng của sản phẩm/mặt hàng.""")
     product_unit_price: str = Field(description="""Giá tiền của 1 đơn vị sản phẩm/mặt hàng.""")
     product_total_money: str = Field(description="""Tổng tiền của sản phẩm/mặt hàng, tính bằng số lượng sản phẩm/mặt hàng nhân với giá tiền một đơn vị sản phẩm/mặt hàng.""")
@@ -30,9 +30,9 @@ class ProductInfo(BaseModel):
 
 class BaseExtractInfo(BaseModel):
     mart_name : str = Field(description="""Tên của cửa hàng/Siêu thị phát hành hoá đơn này.""")
-    phone : list[str] = Field(description="""Số điện thoại của cửa hàng/Siêu thị phát hành hoá đơn, theo sau cụm từ \"Điện thoại\" hoặc \"SĐT\" hoặc tương tự.""")
-    address: str = Field(description="""Địa chỉ của cửa hàng/Siêu thị phát hành hóa đơn.""")
-    website: list[str] = Field(description="""Website của cửa hàng/Siêu thị phát hành hoá đơn.""")
+    # phone : list[str] = Field(description="""Số điện thoại của cửa hàng/Siêu thị phát hành hoá đơn, theo sau cụm từ \"Điện thoại\" hoặc \"SĐT\" hoặc tương tự.""")
+    # address: str = Field(description="""Địa chỉ của cửa hàng/Siêu thị phát hành hóa đơn.""")
+    # website: list[str] = Field(description="""Website của cửa hàng/Siêu thị phát hành hoá đơn.""")
     staff : str = Field(description="""Tên hoặc mã số của thu ngân/nhân viên in hoá đơn, theo sau từ \"thu ngân\" hoặc \"nhân viên\" hoặc tương tự.""")
     date : str = Field(description="""Ngày in hoá đơn, trả về theo định dạng dd/mm/yyyy.""")
     time : str = Field(description="""Thời gian theo hh:mm:ss in hoá đơn.""")
@@ -40,8 +40,8 @@ class BaseExtractInfo(BaseModel):
     pos_id : str = Field(description="""Mã/Số của quầy in hoá đơn, thường được viết là Quầy, Pos.""")
     total_quantity : str = Field(description="""Tổng số lượng sản phẩm của hoá đơn.""")
     total_money : str = Field(description="""Tổng tiền của hoá đơn sau giảm giá/Số tiền mà khách hàng phải trả.""")
-    total_original_money : str = Field(description="""Tổng tiền của hoá đơn trước khi giảm giá/Tổng tiền của tất cả sản phẩm trong hoá đơn.""")
-    total_discount_money : str = Field(description="""Tổng số tiền được giảm giá/Tổng của số tiền giảm giá của từng sản phầm.""")
+    # total_original_money : str = Field(description="""Tổng tiền của hoá đơn trước khi giảm giá/Tổng tiền của tất cả sản phẩm trong hoá đơn.""")
+    # total_discount_money : str = Field(description="""Tổng số tiền được giảm giá/Tổng của số tiền giảm giá của từng sản phầm.""")
     product_info : list[ProductInfo] = Field(description="""Thông tin của các sản phẩm/mặt hàng có trong hoá đơn, theo thứ tự từ trên xuống dưới.""")
 
 
@@ -102,6 +102,7 @@ class InformationExtractor(BaseModuleVLLM):
             prompt=text
         )
         output_text = chat_response.choices[0].text
+        # pdb.set_trace()
         result['raw_result'] = output_text
         metadata = self.add_metadata(metadata, 1, 1)
         out.set_data(result)

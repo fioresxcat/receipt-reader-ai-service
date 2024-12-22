@@ -133,6 +133,9 @@ class PostProcessor(BaseModule):
             'winlife': PostProcessorVINMART(common_config, model_config)
         }
 
+        self.keep_fields = ['mart_name', 'date', 'receipt_id', 'pos_id', 'staff', 'time', 'total_money', 'total_quantity', 'products']
+        self.product_keep_fields = ['product_id', 'product_name', 'product_unit_price', 'product_quantity', 'product_total_money']
+
 
     @staticmethod
     def get_instance(common_config, model_config):
@@ -146,7 +149,7 @@ class PostProcessor(BaseModule):
         inp_data = inp.get_data()
         inp_data['result'] = {}
         result = self.post_processor[inp_data['mart_type']].predict(request_id, inp_data)
-        pdb.set_trace()
+        # pdb.set_trace()
         metadata = self.add_metadata(metadata, 1, 1)
         result['result']['type'] = inp_data['mart_type']
         if result['result']['type'] in ['vinmart', 'vinmartplus']:
@@ -156,6 +159,12 @@ class PostProcessor(BaseModule):
                 result['result']['type'] = 'winmart'
         elif result['result']['type'] in ['heineken', 'heineken_2024']:
             result['result']['type'] = 'heineken'
+        
+        result['result'] = {k: v for k, v in result['result'].items() if k in self.keep_fields}
+        for product_index, product_info in enumerate(result['result']['products']):
+            product_info = {k:v for k, v in product_info.items() if k in self.product_keep_fields}
+            result['result']['products'][product_index] = product_info
+            
         out.set_data(result)
         return out, metadata
 

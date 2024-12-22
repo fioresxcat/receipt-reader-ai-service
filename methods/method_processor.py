@@ -20,4 +20,4 @@ class MethodProcessor(object):
         self.methods = {}
         for method_name in self.config_methods['use_methods'].keys():
             if self.config_methods['use_methods'][method_name]:
-                self.methods[method_name] = self.method_mapper[method_name](self.root_logger, self.time_logger, self.debugger, self.config_env['inference_server'], self.config_models, self.config_env['grpc']['FORCE_QUIT'])
+                self.methods[method_name] = self.method_mapper[method_name](self.root_logger, self.time_logger, self.debugger, self.config_env, self.config_models)

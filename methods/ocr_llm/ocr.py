@@ -4,9 +4,9 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from modules.base import BaseModule
-from modules.ocr_parseq.short_ocr import ShortOCR
-from modules.ocr_parseq.long_ocr import LongOCR
+from modules.base_module import BaseModule
+from modules.ocr.parseq.short_ocr import ShortOCR
+from modules.ocr.parseq.long_ocr import LongOCR
 from utils.utils import total_time
 
 
@@ -17,8 +17,8 @@ class OCR(BaseModule):
     
     def __init__(self, common_config, model_config):
         super(OCR, self).__init__(common_config, model_config)
-        self.short_ocr = ShortOCR.get_instance(common_config, model_config['ocr_short'])
-        self.long_ocr = LongOCR.get_instance(common_config, model_config['ocr_long'])
+        self.short_ocr = ShortOCR.get_instance(common_config, model_config['general_ocr'])
+        self.long_ocr = LongOCR.get_instance(common_config, model_config['general_ocr'])
         self.my_dir = os.path.dirname(__file__)
         self.rate = 3
         
@@ -68,11 +68,11 @@ class OCR(BaseModule):
                     'total_batch_size': 0
                 }
         
-        short_list_raw_words, short_list_raw_cands = self.short_ocr.predict_batch([short_list_images], metadata)
-        long_list_raw_words, long_list_raw_cands = self.long_ocr.predict_batch([long_list_images], metadata)
-        for (i, j), raw_word, raw_cand in zip(short_indexes, short_list_raw_words[0], short_list_raw_cands[0]):
+        short_list_raw_words, short_list_raw_cands = self.short_ocr.predict_batch(short_list_images, metadata)
+        long_list_raw_words, long_list_raw_cands = self.long_ocr.predict_batch(long_list_images, metadata)
+        for (i, j), raw_word, raw_cand in zip(short_indexes, short_list_raw_words, short_list_raw_cands):
             result['pages'][i]['raw_words'][j] = raw_word
-        for (i, j), raw_word, raw_cand in zip(long_indexes, long_list_raw_words[0], long_list_raw_cands[0]):
+        for (i, j), raw_word, raw_cand in zip(long_indexes, long_list_raw_words, long_list_raw_cands):
             result['pages'][i]['raw_words'][j] = raw_word
 
         result['charset_list'] = self.short_ocr.charset_list

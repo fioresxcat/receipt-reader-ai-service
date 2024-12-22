@@ -6,7 +6,7 @@ import numpy as np
 
 from json_repair import repair_json
 from utils.utils import total_time
-from modules.base import BaseModule
+from modules.base_module import BaseModule
 
 
 class Postprocessor(BaseModule):
@@ -19,26 +19,30 @@ class Postprocessor(BaseModule):
         self.field_structure = {
             'general_info': {
                 'mart_name': str,
-                'phone': list,
-                'address': str,
-                'website': list,
+                # 'phone': list,
+                # 'address': str,
+                # 'website': list,
                 'pos_id': str,
+                'receipt_id': str,
                 'staff': str,
                 'date': str,
                 'time': str,
-                'code': str,
-                'discount': str,
-                'total_money': str
+                # 'discount': str,
+                'total_money': str,
+                'total_quantity': str
             },
             'product_info': {
                 'product_name': str,
-                'product_code': str,
+                'product_id': str,
                 'product_quantity': str,
                 'product_unit_price': str,
                 'product_total_money': str
             }
         }
         
+        self.keep_fields = ['mart_name', 'date', 'receipt_id', 'pos_id', 'staff', 'time', 'total_money', 'total_quantity']
+        self.product_keep_fields = ['product_id', 'product_name', 'product_unit_price', 'product_quantity', 'product_total_money']
+
         
     @staticmethod
     def get_instance(common_config, model_config):
@@ -74,10 +78,12 @@ class Postprocessor(BaseModule):
                                 else:
                                     ocr_cands[key].append(val)
             if len(ocr_cands) != 0:
+                ocr_cands = {k:v for k, v in ocr_cands.items() if k in self.keep_fields}
                 result.append({
                     'group_name': 'general_info',
                     'infos': ocr_cands
                 })
+
             # add provider_info, receiving_officer_info, feedback_info
             if 'product_info' in raw_result.keys():
                 if type(raw_result['product_info']) is list:
@@ -103,11 +109,12 @@ class Postprocessor(BaseModule):
                                                 has_value = True
                                                 ocr_cands[key].append(val)
                         if len(ocr_cands) != 0 and has_value:
+                            ocr_cands = {k:v for k, v in ocr_cands.items() if k in self.product_keep_fields}
                             result.append({
                                 'group_name': 'product_info',
                                 'infos': ocr_cands
                             })
-            
+        
         metadata = self.add_metadata(metadata, 1, 1)
         out.set_data(result)
         return out, metadata

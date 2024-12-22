@@ -483,7 +483,7 @@ class BaseInformationExtractor(BaseModule):
                 # labels = [self.label_list[i] for i in np.argmax(output, axis=1)]
 
                 raw_result, raw_text, raw_list_box = self.get_raw_result(inp_data['mart_type'], bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-                pdb.set_trace()
+                # pdb.set_trace()
                 
                 inp_data['list_raw_result'].append(raw_result)
                 inp_data['list_raw_text'].append(raw_text)

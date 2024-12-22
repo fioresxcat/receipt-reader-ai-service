@@ -4,7 +4,7 @@ import math
 import numpy as np
 
 from utils.utils import total_time
-from modules.text_detection_db.base_text_detection import BaseTextDetector
+from modules.text_detection.db.base_text_detection import BaseTextDetector
 
 
 class TextDetector(BaseTextDetector):
@@ -62,6 +62,7 @@ class TextDetector(BaseTextDetector):
     def predict(self, request_id, inp, out, metadata):
         result = inp.get_data()
         result['pages'] = []
+        result['images'] = result.pop('rotated_images', None)
         for page_index in range(len(result['images'])):
             src_image = result['images'][page_index]
             h, w = src_image.shape[:2]
@@ -103,10 +104,10 @@ class TextDetector(BaseTextDetector):
             
             p4_bbs, p8_bbs = self.merge_boxes(new_p4_bbs, new_p8_bbs)
             for x1, y1, x2, y2, x3, y3, x4, y4 in p8_bbs:
-                pts = self.expand_long_box(src_image, x1, y1, x2, y2, x3, y3, x4, y4)
-                edge_s, edge_l = self.get_edge(x1, y1, x2, y2, x3, y3, x4, y4)
+                pts = self.expand_long_box(src_image, (x1, y1, x2, y2, x3, y3, x4, y4))
+                edge_s, edge_l = self.get_edge((x1, y1, x2, y2, x3, y3, x4, y4))
                 if edge_l / edge_s < 1.5:
-                    text_image = self.to_2_points(src_image, x1, y1, x2, y2, x3, y3, x4, y4)
+                    text_image = self.to_2_points(src_image, (x1, y1, x2, y2, x3, y3, x4, y4))
                 else:
                     text_image = self.four_point_transform(src_image, pts)
                 text_box_images.append(text_image)

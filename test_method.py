@@ -28,7 +28,6 @@ config_common = utils.load_yaml('configs/config_common.yaml')
 list_mart_types = ['coopmart', 'emart', 'gs25', 'newbigc_go_top', 'winmart_combined']
 
 def main(args):
-    
     log_path = args.log_path
     debugger = Debugger(log_path=log_path)
     method_processors = MethodProcessor(config_env, config_methods, config_models, root_logger, time_logger, debugger)
@@ -60,7 +59,10 @@ def main(args):
             images.append(image)
         # gen request
         inp = Input(data = {'rotated_images': images, 'mart_type': mart_type})
-        out, metadata = method_processors.methods['OCR'].predict(file, inp)
+        if args.inp_type == 'ocr':
+            out, metadata = method_processors.methods['OCR'].predict(file, inp)
+        elif args.inp_type == 'ocr_llm':
+            out, metadata = method_processors.methods['OCR_LLM'].predict(file, inp)
         if out.get_error()['error_code'] != 0:
             with open(os.path.join(log_path, file, 'error.json'), 'w') as f:
                 json.dump(out.get_error(), f)
@@ -69,7 +71,8 @@ def main(args):
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--inp_path')
+    parser.add_argument('--inp_path', type=str)
+    parser.add_argument('--inp_type', type=str)
     parser.add_argument('--log_path', default='logs')
     parser.add_argument('--mart_type', default='receipt')
     args = parser.parse_args()

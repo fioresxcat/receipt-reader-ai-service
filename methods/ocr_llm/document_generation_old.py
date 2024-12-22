@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 from utils.utils import total_time
-from modules.base import BaseModule
+from modules.base_module import BaseModule
 
 
 def sort_box(bbs, texts):
