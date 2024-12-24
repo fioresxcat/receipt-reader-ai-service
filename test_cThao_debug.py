@@ -1,6 +1,7 @@
 import os
 import cv2
 import pdb
+import unidecode
 import fitz
 import utils
 import base64
@@ -121,22 +122,44 @@ def check_error():
 
 
 def compute_acc():
+    normalize = False
+    lower = True
+    remove_space = False
+
+    def preprocess_result(text):
+        text = str(text)
+        if text == '-':
+            text = ''
+        if normalize:
+            text = unidecode.unidecode(text)
+        if lower:
+            text = text.lower()
+        if remove_space:
+            text = text.replace(' ', '')
+        return text
+    
     dirs = [
-        ('logs/v1.0.0/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
+        # ('logs/v1.0.1/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
+        # ('logs/v1.0.1/BigC_2022_49', 'test_files/receipt_data-test_cThao_warped/BigC_2022_49/label-bigC-2022-49.json'),
+        ('logs/v1.0.1/Coopmart_CoopXtra_2022_76', 'test_files/receipt_data-test_cThao_warped/Coopmart_CoopXtra_2022_76/label-coopmart-coopxtra-2022-76.json'),
+        # ('logs/v1.0.1/Emart_2022_29', 'test_files/receipt_data-test_cThao_warped/Emart_2022_29/label-emart-2022-29.json'),
+        # ('logs/v1.0.1/GS25_46', 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'),
+        # ('logs/v1.0.1/Vinmart_50', 'test_files/receipt_data-test_cThao_warped/Vinmart_50/label-vinmart-50.json'),
+        # ('logs/v1.0.1/Winmart_2022_40', 'test_files/receipt_data-test_cThao_warped/Winmart_2022_40/label-winmart-2022-38.json')
     ]
+
+    # init field stats
+    field_stats = {}
+    for field in GENERAL_FIELDS + PRODUCT_FIELDS:
+        field_stats[field] = {
+            'accuracy': 0,
+            'total': 0,
+            'correct': 0,
+        }
 
     for result_dir, label_fp in dirs:
         with open(label_fp) as f:
             labels = json.load(f)
-
-        # init field stats
-        field_stats = {}
-        for field in GENERAL_FIELDS + PRODUCT_FIELDS:
-            field_stats[field] = {
-                'accuracy': 0,
-                'total': 0,
-                'correct': 0,
-            }
         
         for fn in os.listdir(result_dir):  # chi tinh acc cho nhung file da chay xong
             # get gt
@@ -169,6 +192,8 @@ def compute_acc():
             print(f'Processing {fn} ...')
             # get pred
             pred_fp = os.path.join(result_dir, fn, 'result.json')
+            if not os.path.exists(pred_fp):
+                continue
             with open(pred_fp) as f:
                 file_pred = json.load(f)
 
@@ -178,11 +203,9 @@ def compute_acc():
 
                 if field in GENERAL_FIELDS:
                     gt = file_anno[field]
-                    if gt == '-':
-                        gt = ''
                     pred = file_pred[field] 
                     field_stats[field]['total'] += 1
-                    field_stats[field]['correct'] += int(gt==pred)
+                    field_stats[field]['correct'] += int(preprocess_result(gt)==preprocess_result(pred))
 
                 elif field == 'products':
                     for i, prod_gt in enumerate(file_anno['products']):
@@ -193,16 +216,14 @@ def compute_acc():
                         final_prod = None
                         max_sim = 0
                         for pred_prod in file_pred['products']:
-                            sim = str_similarity(pred_prod['product_name'], prod_gt['product_name'])
+                            sim = str_similarity(pred_prod['product_name'].lower(), prod_gt['product_name'].lower())
                             if sim > max_sim and sim > 0.7:
                                 max_sim = sim
                                 final_prod = pred_prod
                         if final_prod is not None:
                             for prod_field, gt_field_value in prod_gt.items():
                                 pred_field_value = final_prod[prod_field]
-                                if gt_field_value == '-':
-                                    gt_field_value = ''
-                                field_stats[prod_field]['correct'] += int(gt_field_value==pred_field_value)
+                                field_stats[prod_field]['correct'] += int(preprocess_result(gt_field_value)==preprocess_result(pred_field_value))
                     
     # compute acc
     for field in field_stats.keys():

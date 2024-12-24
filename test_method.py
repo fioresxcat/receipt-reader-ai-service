@@ -27,46 +27,63 @@ config_common = utils.load_yaml('configs/config_common.yaml')
 
 list_mart_types = ['coopmart', 'emart', 'gs25', 'newbigc_go_top', 'winmart_combined']
 
+
+def is_image(fp):
+    fp = str(fp)
+    return fp.endswith('.jpg') or fp.endswith('.png') or fp.endswith('.jpeg') or fp.endswith('.JPG') or fp.endswith('.JPEG') or fp.endswith('.PNG')
+
+
 def main(args):
     log_path = args.log_path
     debugger = Debugger(log_path=log_path)
     method_processors = MethodProcessor(config_env, config_methods, config_models, root_logger, time_logger, debugger)
     files = os.listdir(args.inp_path)
     print('NUMBER OF FILES: ', len(files))
+    err_files = []
     for i, file in enumerate(files):
-        mart_type = args.mart_type if args.mart_type else Path(file).parent
-        # assert mart_type in list_mart_types
-        # file = 'img-2.jpeg'
-        print('PROCESSING: ', file)
-        if '.json' in file or 'HEIC' in file or '.DS_Store' in file:
-            continue
-        file_path = os.path.join(args.inp_path, file)
-        images = []
-        if os.path.isdir(file_path):
-            sub_files = os.listdir(file_path)
-            sub_files.sort()
-            for sub_file in sub_files:
-                with open(os.path.join(file_path, sub_file), "rb") as image_file:
+        try:
+            mart_type = args.mart_type if args.mart_type else Path(file).parent
+            # assert mart_type in list_mart_types
+            # file = 'img-2.jpeg'
+            print('PROCESSING: ', file)
+            if '.json' in file or 'HEIC' in file or '.DS_Store' in file or not is_image(file):
+                continue
+            file_path = os.path.join(args.inp_path, file)
+            images = []
+            if os.path.isdir(file_path):
+                sub_files = os.listdir(file_path)
+                sub_files.sort()
+                for sub_file in sub_files:
+                    with open(os.path.join(file_path, sub_file), "rb") as image_file:
+                        base64_string = base64.b64encode(image_file.read())
+                    nparr = np.fromstring(base64.b64decode(base64_string), np.uint8)
+                    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+                    images.append(image)
+            else:
+                with open(file_path, "rb") as image_file:
                     base64_string = base64.b64encode(image_file.read())
                 nparr = np.fromstring(base64.b64decode(base64_string), np.uint8)
                 image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
                 images.append(image)
-        else:
-            with open(file_path, "rb") as image_file:
-                base64_string = base64.b64encode(image_file.read())
-            nparr = np.fromstring(base64.b64decode(base64_string), np.uint8)
-            image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-            images.append(image)
-        # gen request
-        inp = Input(data = {'rotated_images': images, 'mart_type': mart_type})
-        if args.inp_type == 'ocr':
-            out, metadata = method_processors.methods['OCR'].predict(file, inp)
-        elif args.inp_type == 'ocr_llm':
-            out, metadata = method_processors.methods['OCR_LLM'].predict(file, inp)
-        if out.get_error()['error_code'] != 0:
-            with open(os.path.join(log_path, file, 'error.json'), 'w') as f:
-                json.dump(out.get_error(), f)
-            print(out.get_data()['mart_type'])
+            # gen request
+            inp = Input(data = {'rotated_images': images, 'mart_type': mart_type})
+            if args.inp_type == 'ocr':
+                out, metadata = method_processors.methods['OCR'].predict(file, inp)
+            elif args.inp_type == 'ocr_llm':
+                out, metadata = method_processors.methods['OCR_LLM'].predict(file, inp)
+            if out.get_error()['error_code'] != 0:
+                with open(os.path.join(log_path, file, 'error.json'), 'w') as f:
+                    json.dump(out.get_error(), f)
+                print(out.get_data()['mart_type'])
+        except Exception as e:
+            print(e)
+            err_files.append(file)
+            continue
+        
+    print('NUMBER OF ERR FILES: ', len(err_files))
+    for file in err_files:
+        print(file)
+
 
         
 if __name__ == '__main__':

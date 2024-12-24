@@ -22,7 +22,8 @@ class Money_LM(Base_LM):
             return res
         if (s2 != None and s1 == None) or (s1 != None and s2 != None and len(s2.group(0)) > len(s1.group(0))):
             res = s2.group(0)
-            res = res.replace('.', ',') + '.00'
+            # res = res.replace('.', ',') + '.00'
+            res = res.replace(',', '.')
             return res
         return raw_res.replace(',', '.')
             
