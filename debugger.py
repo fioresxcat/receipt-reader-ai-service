@@ -171,12 +171,16 @@ class Debugger(object):
         elif module_name in ['ReceiptAngleEstimator', 'A4AngleEstimator']:
             for i, rotated_image in enumerate(inp_data['rotated_images']):
                 cv2.imwrite(os.path.join(log_path, 'refined_image_' + str(i) + '.png'), rotated_image)
-        elif module_name == 'InformationExtractor':
-            self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
-        elif module_name == 'InformationExtractorA4':
-            self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
+        # elif module_name == 'InformationExtractor':
+        #     self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
+        # elif module_name == 'InformationExtractorA4':
+        #     self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
         elif module_name == 'PostProcessor':
             with open(os.path.join(log_path, 'result.json'), 'w') as f:
                 json.dump(out_data['result'], f, ensure_ascii=False, indent=2)
+            # pdb.set_trace()
+            for index, image in enumerate(inp_data['rotated_images']):
+                save_path = os.path.join(log_path, 'image_' + str(index) + '.png')
+                cv2.imwrite(save_path, image)
             
             

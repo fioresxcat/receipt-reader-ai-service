@@ -411,47 +411,18 @@ class BaseInformationExtractor(BaseModule):
         #             raw_list_box[fieldname].append(bb2list_boxes[bb])
     
         # # get products
-        if receipt_type in ['aeon', 'bhx', 'dmx', 'gs25', 'hc', 'heineken', 'lamthao', 'nova', 'nuty', 'satra', 'tgs', 'tgsf', 'new_gs25', 'ministop', 'emart', 'circlek', 'lotteria', 'bhd', 'cheers', 'bhx_2024', 'kingfood', 'tiemlaunho', 'sayaka']:
+        if receipt_type in ['gs25',  'new_gs25',  'emart']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_quantity', 'product_unit_price'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['go', 'topmarket', 'new_bigc', 'family_mart', 'newbigc_go_top']:
+        elif receipt_type in ['go', 'topmarket', 'new_bigc',  'newbigc_go_top']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['lotte']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money', 'product_total_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['711']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type2('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['brg', 'coopmart', 'fujimart', 'guardian', 'mega', 'coopfood', 'bsmart']:
+        elif receipt_type in ['coopmart']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type2('product_id', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['aeoncitimart', 'vinmart', 'vinmartplus', 'winlife', 'winmart_combined']:
+        elif receipt_type in ['vinmart', 'vinmartplus', 'winlife', 'winmart_combined']:
             raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['nguyenkim']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_quantity', ['product_unit_price', 'product_total_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['lanchi', 'old_bigc']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_original_money', ['product_original_price', 'product_quantity'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['thegioisua']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_id', [], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['bitis']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', [], 1, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['pizza_company', 'don_chicken', 'okono', 'galaxy_cinema']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['kfc']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_name', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['heineken_2024']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_total_money', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['pepper_lunch']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_total_money', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels, max_row=1)
-        elif receipt_type in ['lotte_cinema']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels, max_row=1)
-        elif receipt_type in ['sukiya', 'umyoshi']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels, max_row=2)
-        elif receipt_type in ['globalx']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type3('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels, max_row=3)
-        elif receipt_type in ['bonchon']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type4('product_quantity', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['launuongmai']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type4('product_unit_price', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
 
-        elif receipt_type == 'receipt':
-            pass
+        else:
+            raise ValueError('Unknown receipt type: {}'.format(receipt_type))
+            
 
         return raw_result, raw_text, raw_list_box
         

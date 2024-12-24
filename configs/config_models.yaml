@@ -33,6 +33,26 @@ triton_models:
         model_dir: models_receipt
         request_timeout: 60.0
 
+    corner_detection:
+        model_spec_name: RECEIPT_corner_detection
+        model_spec_version: 42023111001002
+        input_shape: [512, 512, 3]
+        input_name: input
+        input_type: FP32
+        output_name: output
+        max_batch_size: 1
+        num_point: 4
+        request_timeout: 60.0
+
+    receipt_rotation:
+        model_spec_name: RECEIPT_receipt_rotation
+        model_spec_version: 32023091801006
+        input_shape: [512, 512, 3]
+        input_name: input
+        input_type: UINT8
+        output_name: output
+        max_batch_size: 1
+        request_timeout: 60.0
 
 vllm_models:
     base-model:

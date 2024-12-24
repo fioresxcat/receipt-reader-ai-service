@@ -35,7 +35,7 @@ def main(args):
     print('NUMBER OF FILES: ', len(files))
     for i, file in enumerate(files):
         mart_type = args.mart_type if args.mart_type else Path(file).parent
-        assert mart_type in list_mart_types
+        # assert mart_type in list_mart_types
         # file = 'img-2.jpeg'
         print('PROCESSING: ', file)
         if '.json' in file or 'HEIC' in file or '.DS_Store' in file:

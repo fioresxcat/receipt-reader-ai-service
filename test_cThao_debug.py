@@ -10,13 +10,30 @@ import numpy as np
 from pathlib import Path
 import json
 import shutil
-
+import Levenshtein
 import logging.config
 logging.config.fileConfig('configs/logging.conf')
 
 # from reader import Reader
 # from debugger import Debugger
 from inpout import Input, Output
+
+
+FIELD_MAPPING = {
+    'name': 'mart_name',
+    'receipt_number': 'receipt_id',
+    'product_code': 'product_id',
+    'product_amount': 'product_quantity',
+}
+
+GENERAL_FIELDS = ['mart_name', 'receipt_id', 'pos_id', 'date', 'time', 'staff', 'total_money', 'total_quantity']
+PRODUCT_FIELDS = ['product_id', 'product_name', 'product_quantity', 'product_unit_price', 'product_total_money']
+
+
+def str_similarity(str1, str2):
+    distance = Levenshtein.distance(str1, str2)
+    score = 1 - (distance / (max(len(str1), len(str2))))
+    return score
 
 
 def process_log_aDung():
@@ -104,11 +121,102 @@ def check_error():
 
 
 def compute_acc():
-    pass
+    dirs = [
+        ('logs/v1.0.0/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
+    ]
+
+    for result_dir, label_fp in dirs:
+        with open(label_fp) as f:
+            labels = json.load(f)
+
+        # init field stats
+        field_stats = {}
+        for field in GENERAL_FIELDS + PRODUCT_FIELDS:
+            field_stats[field] = {
+                'accuracy': 0,
+                'total': 0,
+                'correct': 0,
+            }
+        
+        for fn in os.listdir(result_dir):  # chi tinh acc cho nhung file da chay xong
+            # get gt
+            try:
+                file_anno = [lb for lb in labels if 'file' in lb and lb['file'] == fn][0]
+            except Exception as e:
+                raise e
+                print(f'{fn} has no label')
+                continue
+            
+            # format fields
+            orig_fields = list(file_anno.keys())
+            for orig_field in orig_fields:
+                field = FIELD_MAPPING[orig_field] if orig_field in FIELD_MAPPING else orig_field
+                if field not in GENERAL_FIELDS and field != 'products':
+                    file_anno.pop(field)
+                else:
+                    file_anno[field] = file_anno.pop(orig_field)
+                if field == 'products':
+                    for index, prod_gt in enumerate(file_anno['products']):
+                        # mapping field
+                        prod_fields = list(prod_gt.keys())
+                        for prod_field in prod_fields:
+                            mapped_field = FIELD_MAPPING[prod_field] if prod_field in FIELD_MAPPING else prod_field
+                            prod_gt[mapped_field] = prod_gt.pop(prod_field)
+                        # remove non-extracted fields
+                        prod_gt = {k:v for k,v in prod_gt.items() if k in PRODUCT_FIELDS}
+                        file_anno['products'][index] = prod_gt
+
+            print(f'Processing {fn} ...')
+            # get pred
+            pred_fp = os.path.join(result_dir, fn, 'result.json')
+            with open(pred_fp) as f:
+                file_pred = json.load(f)
+
+            for field in file_anno:
+                if field not in GENERAL_FIELDS and field != 'products':
+                    continue
+
+                if field in GENERAL_FIELDS:
+                    gt = file_anno[field]
+                    if gt == '-':
+                        gt = ''
+                    pred = file_pred[field] 
+                    field_stats[field]['total'] += 1
+                    field_stats[field]['correct'] += int(gt==pred)
+
+                elif field == 'products':
+                    for i, prod_gt in enumerate(file_anno['products']):
+                        for prod_field in prod_gt.keys():
+                            field_stats[prod_field]['total'] += 1
+
+                        # find prod with most similar name
+                        final_prod = None
+                        max_sim = 0
+                        for pred_prod in file_pred['products']:
+                            sim = str_similarity(pred_prod['product_name'], prod_gt['product_name'])
+                            if sim > max_sim and sim > 0.7:
+                                max_sim = sim
+                                final_prod = pred_prod
+                        if final_prod is not None:
+                            for prod_field, gt_field_value in prod_gt.items():
+                                pred_field_value = final_prod[prod_field]
+                                if gt_field_value == '-':
+                                    gt_field_value = ''
+                                field_stats[prod_field]['correct'] += int(gt_field_value==pred_field_value)
+                    
+    # compute acc
+    for field in field_stats.keys():
+        if field_stats[field]['total'] == 0:
+            continue
+        field_stats[field]['accuracy'] = round(field_stats[field]['correct'] / field_stats[field]['total'], 4)
+    for field, field_info in field_stats.items():
+        print(f'{field}: {field_info}')
+
 
 
 if __name__ == '__main__':
     pass
+    compute_acc()
     # check_error()
     # get_err_files()
     # process_log_aDung()
