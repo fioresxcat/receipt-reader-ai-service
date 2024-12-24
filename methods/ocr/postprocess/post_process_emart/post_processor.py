@@ -68,6 +68,6 @@ class PostProcessorEMART(BaseModule):
                 result['result'][key] = ''
                 if len(info['raw_result'][key]) != 0:
                     result['result'][key] = self.post_processors[key].predict(None, None, None, info['raw_result'][key], info['charset_list'])[-1]
-        if 'pos_id' in result['result'].keys() and result['result']['pos_id'] != '':
-            result['result']['receipt_id'] = result['result']['pos_id']
+        # if 'pos_id' in result['result'].keys() and result['result']['pos_id'] != '':
+        #     result['result']['receipt_id'] = result['result']['pos_id']
         return result

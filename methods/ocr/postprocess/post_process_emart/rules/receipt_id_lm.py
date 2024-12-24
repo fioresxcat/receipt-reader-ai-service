@@ -1,4 +1,5 @@
 import re
+import pdb
 
 from .base_lm import Base_LM
 
@@ -21,9 +22,14 @@ class Receipt_id_LM(Base_LM):
         if len(words) == 0:
             words = raw_words
         if self.max_words == None:
-            return ' '.join(words)
+            result = ' '.join(words)
+            if '-' in result:
+                result = result.split('-')[-1]
         else:
-            return ' '.join(words[:self.max_words])
+            result = ' '.join(words[:self.max_words])
+            if '-' in result:
+                result = result.split('-')[-1]
+        return result
 
 
     def predict(self, key, index, sub_key, char_cands, charset_list):
