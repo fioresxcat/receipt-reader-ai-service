@@ -71,9 +71,9 @@ def main(args):
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--inp_path', type=str)
-    parser.add_argument('--inp_type', type=str)
-    parser.add_argument('--log_path', default='logs')
-    parser.add_argument('--mart_type', default='receipt')
+    parser.add_argument('--inp_path', type=str, default='test_files/files')
+    parser.add_argument('--inp_type', type=str, default='ocr')
+    parser.add_argument('--log_path', default='logs/temp')
+    parser.add_argument('--mart_type', default='emart')
     args = parser.parse_args()
     main(args)

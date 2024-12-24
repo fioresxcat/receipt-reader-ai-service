@@ -177,6 +177,6 @@ class Debugger(object):
             self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
         elif module_name == 'PostProcessor':
             with open(os.path.join(log_path, 'result.json'), 'w') as f:
-                json.dump(inp_data['result'], f, ensure_ascii=False, indent=2)
+                json.dump(out_data['result'], f, ensure_ascii=False, indent=2)
             
             

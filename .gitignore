@@ -68,3 +68,4 @@ build_docker.sh
 temp*
 venv
 logs*
+test_files/
