@@ -1,1 +1,1 @@
-from .postprocess import Postprocessor
+from .postprocess import LLMPostprocessor

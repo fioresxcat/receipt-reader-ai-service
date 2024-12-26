@@ -98,7 +98,7 @@ if st.button("Submit"):
         base64_string = base64.b64encode(bytes_data)
         nparr = np.frombuffer(base64.b64decode(base64_string), np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        st.image(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), caption="Uploaded Receipt Image", use_column_width=True)
+        st.image(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), caption="Uploaded Receipt Image", use_container_width=True)
 
         # Placeholder for model processing (user-defined)
         st.info("Processing the image...")

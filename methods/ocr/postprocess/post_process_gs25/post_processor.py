@@ -26,7 +26,7 @@ class PostProcessorGS25(BaseModule):
         elif config['type'] == 'Money_LM':
             return Money_LM(config['max_words'])
         elif config['type'] == 'Reciept_id_LM':
-            return Reciept_id_LM(config['max_words'])
+            return Receipt_id_LM(config['max_words'])
         elif config['type'] == 'Quantity_LM':
             return Quantity_LM(config['max_words'])
         elif config['type'] == 'Pos_id_LM':

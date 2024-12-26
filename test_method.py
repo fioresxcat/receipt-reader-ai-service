@@ -41,6 +41,8 @@ def main(args):
     print('NUMBER OF FILES: ', len(files))
     err_files = []
     for i, file in enumerate(files):
+        if file != 'gs25-1.jpg':
+            continue
         try:
             mart_type = args.mart_type if args.mart_type else Path(file).parent
             # assert mart_type in list_mart_types
@@ -75,6 +77,8 @@ def main(args):
                 with open(os.path.join(log_path, file, 'error.json'), 'w') as f:
                     json.dump(out.get_error(), f)
                 print(out.get_data()['mart_type'])
+        except KeyboardInterrupt:
+            raise
         except Exception as e:
             print(e)
             err_files.append(file)

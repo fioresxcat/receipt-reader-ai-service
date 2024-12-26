@@ -63,8 +63,8 @@ vllm_models:
         top_p: 1
     receipt-lora:
         base_model_name: Qwen2.5-1.5B-Instruct
-        lora_name: /data/tungtx2/receipt-models-vllm/loras/Qwen2.5-1.5B-Instruct/dunglt5_gotit_data_v3_lora_64_checkpoint-1900
-        max_tokens: 4096
+        lora_name: receipt-lora
+        max_tokens: 10144
         temperature: 0
         top_p: 1
 

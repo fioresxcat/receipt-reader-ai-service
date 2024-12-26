@@ -151,6 +151,8 @@ class Debugger(object):
         # write to debug dir
         inp_data = inp.get_data()
         out_data = out.get_data()
+        print('MODULE NAME: ', module_name)
+        # pdb.set_trace()
         if module_name == 'SpamDetector':
             for i, image in enumerate(inp_data['images']):
                 cv2.imwrite(os.path.join(log_path, 'image_' + str(i) + '.png'), image)
@@ -182,5 +184,24 @@ class Debugger(object):
             for index, image in enumerate(inp_data['rotated_images']):
                 save_path = os.path.join(log_path, 'image_' + str(index) + '.png')
                 cv2.imwrite(save_path, image)
+        elif module_name == 'LLMPostprocessor':
+            for index, image in enumerate(inp_data['images']):
+                save_path = os.path.join(log_path, 'image_' + str(index) + '.png')
+                cv2.imwrite(save_path, image)
+            result = {}
+            for group in out_data:
+                if group['group_name'] == 'general_info':
+                    for key in group['infos']:
+                        result[key] = group['infos'][key][0]
+                elif group['group_name'] == 'product_info':
+                    if 'products' not in result:
+                        result['products'] = []
+                    product_info = {}
+                    for key in group['infos']:
+                        product_info[key] = group['infos'][key][0]
+                    result['products'].append(product_info)
+
+            with open(os.path.join(log_path, 'result.json'), 'w') as f:
+                json.dump(result, f, ensure_ascii=False, indent=2)
             
             

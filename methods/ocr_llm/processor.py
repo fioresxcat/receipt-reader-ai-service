@@ -2,8 +2,8 @@ from methods.base_method import BaseMethod
 from .text_detection import TextDetector
 from .ocr import OCR
 from .document_generation import DocumentGenerator
-from .information_extraction import InformationExtractor
-from .postprocess import Postprocessor
+from .information_extraction.information_extraction_new import LLMInformationExtractor
+from .postprocess import LLMPostprocessor
 
 
 class OCRLLMProcessor(BaseMethod):
@@ -16,7 +16,7 @@ class OCRLLMProcessor(BaseMethod):
             TextDetector.get_instance(self.triton_config, model_config['triton_models']['text_detection']),
             OCR.get_instance(self.triton_config, model_config['triton_models']),
             DocumentGenerator.get_instance(self.triton_config, model_config['triton_models']),
-            InformationExtractor.get_instance(self.vllm_config, model_config['vllm_models']['base-model']),
-            Postprocessor.get_instance(self.triton_config, model_config)
+            LLMInformationExtractor.get_instance(self.vllm_config, model_config['vllm_models']['receipt-lora']),
+            LLMPostprocessor.get_instance(self.triton_config, model_config)
         ]
 

@@ -9,12 +9,129 @@ from utils.utils import total_time
 from modules.base_module import BaseModule
 
 
-class Postprocessor(BaseModule):
+
+class BaseMartPostprocessor:
+    def __init__(self):
+        pass
+
+
+    def postprocess_general_fields(self, infos):
+        return infos
+    
+
+    def postprocess_product_fields(self, infos):
+        return infos
+
+
+    def predict(self, result):
+        for group_index, group in enumerate(result):
+            if group['group_name'] == 'general_info':
+                result[group_index]['infos'] = self.postprocess_general_fields(group['infos'])
+            elif group['group_name'] == 'product_info':
+                result[group_index]['infos'] = self.postprocess_product_fields(group['infos'])
+
+        return result
+
+
+    
+class EmartPostprocessor(BaseMartPostprocessor):
+    def postprocess_general_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['pos_id', 'receipt_id', 'staff']:
+                    if ':' in val:
+                        new_val = ':'.join(val.split(':')[1:])
+                        infos[field][val_index] = new_val
+                elif field in ['date']:
+                    infos[field][val_index] = val.replace('-', '/')
+        return infos
+    
+
+
+class CoopmartPostprocessor(BaseMartPostprocessor):
+    def format_money(self, raw_res):
+        raw_words = raw_res.split(',')
+        while ',,' in raw_res:
+            raw_res = raw_res.replace(',,', ',')
+        s1 = re.search('\d{1,3}[\,\d{3}]*\,\d{2}', raw_res)
+        s2 = re.search('\d{1,3}[\.\d{3}]*', '.'.join(raw_words).replace(',', '.'))
+        if (s1 != None and s2 == None) or (s1 != None and s2 != None and len(s1.group(0)) >= len(s2.group(0))):
+            res = s1.group(0)
+            res = res[:-3] + '.' + res[-2:]
+            return res
+        if (s2 != None and s1 == None) or (s1 != None and s2 != None and len(s2.group(0)) > len(s1.group(0))):
+            res = s2.group(0)
+            # res = res.replace('.', ',') + '.00'
+            res = res.replace(',', '.')
+            return res
+        return raw_res.replace(',', '.')
+
+
+    def postprocess_general_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['pos_id', 'receipt_id', 'staff']:
+                    if ':' in val:
+                        new_val = ':'.join(val.split(':')[1:])
+                        infos[field][val_index] = new_val
+                elif field == 'total_money':
+                    infos[field][val_index] = self.format_money(val)
+        return infos
+    
+
+    def postprocess_product_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['product_unit_price', 'product_total_money']:
+                    infos[field][val_index] = self.format_money(val)
+        return infos
+
+
+
+
+class GS25Postprocessor(BaseMartPostprocessor):
+    def __init__(self):
+        self.my_dir = os.path.dirname(__file__)
+        self.map = {}
+        dict_path = os.path.join(self.my_dir, 'newgs25_names.txt')
+        with open(dict_path, 'r', encoding='utf-8') as f:
+            for row in f:
+                mart_id, mart_name = row[:-1].split('\t')
+                self.map[mart_id] = mart_name
+
+
+    def map_mart_name(self, pos_id):
+        s = re.search('VN\d{4}', pos_id)
+        mart_name = ''
+        mart_id = ''
+        if s is not None:
+            mart_id = s.group(0)
+        if mart_id in self.map.keys():
+            mart_name = self.map[mart_id]
+        return mart_name
+    
+
+    def postprocess_general_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['receipt_id']:
+                    if val.startswith('-'):
+                        new_val = val[1:]
+                        infos[field][val_index] = new_val
+                elif field in ['mart_name']:
+                    if infos['pos_id']:
+                        infos[field][val_index] = self.map_mart_name(infos['pos_id'][0])
+
+        return infos
+    
+
+
+class LLMPostprocessor(BaseModule):
     
     instance = None
     
     def __init__(self, common_config, model_config):
-        super(Postprocessor, self).__init__(common_config, model_config)
+        super(LLMPostprocessor, self).__init__(common_config, model_config)
         self.my_dir = os.path.dirname(__file__)
         self.field_structure = {
             'general_info': {
@@ -31,7 +148,7 @@ class Postprocessor(BaseModule):
                 'total_money': str,
                 'total_quantity': str
             },
-            'product_info': {
+            'products': {
                 'product_name': str,
                 'product_id': str,
                 'product_quantity': str,
@@ -42,13 +159,20 @@ class Postprocessor(BaseModule):
         
         self.keep_fields = ['mart_name', 'date', 'receipt_id', 'pos_id', 'staff', 'time', 'total_money', 'total_quantity']
         self.product_keep_fields = ['product_id', 'product_name', 'product_unit_price', 'product_quantity', 'product_total_money']
-
+        self.mart_postprocessors = {
+            'emart': EmartPostprocessor(),
+            'coopmart': CoopmartPostprocessor(),
+            'gs25': GS25Postprocessor(),
+            'new_bigc': BaseMartPostprocessor(),
+            'winmart': BaseMartPostprocessor(),
+        }
         
+
     @staticmethod
     def get_instance(common_config, model_config):
-        if Postprocessor.instance is None:
-            Postprocessor.instance = Postprocessor(common_config, model_config)
-        return Postprocessor.instance
+        if LLMPostprocessor.instance is None:
+            LLMPostprocessor.instance = LLMPostprocessor(common_config, model_config)
+        return LLMPostprocessor.instance
 
 
     @total_time
@@ -85,15 +209,15 @@ class Postprocessor(BaseModule):
                 })
 
             # add provider_info, receiving_officer_info, feedback_info
-            if 'product_info' in raw_result.keys():
-                if type(raw_result['product_info']) is list:
-                    for group_info in raw_result['product_info']:
+            if 'products' in raw_result.keys():
+                if type(raw_result['products']) is list:
+                    for group_info in raw_result['products']:
                         ocr_cands = {}
                         has_value = False
                         # add sub info
-                        for key in self.field_structure['product_info'].keys():
+                        for key in self.field_structure['products'].keys():
                             if key in group_info.keys():
-                                if type(group_info[key]) == self.field_structure['product_info'][key]:
+                                if type(group_info[key]) == self.field_structure['products'][key]:
                                     ocr_cands[key] = []
                                     if type(group_info[key]) == str:
                                         if group_info[key] in ['', '-']:
@@ -114,7 +238,9 @@ class Postprocessor(BaseModule):
                                 'group_name': 'product_info',
                                 'infos': ocr_cands
                             })
-        
+
+        final_result = self.mart_postprocessors[inp_data['mart_type']].predict(result)
+        # pdb.set_trace()
         metadata = self.add_metadata(metadata, 1, 1)
-        out.set_data(result)
+        out.set_data(final_result)
         return out, metadata
