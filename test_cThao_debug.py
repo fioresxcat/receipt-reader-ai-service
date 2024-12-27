@@ -127,7 +127,7 @@ def compute_acc():
     remove_space = False
 
     def preprocess_result(field, text):
-        text = str(text)
+        text = str(text).strip()
         if text == '-':
             text = ''
         if normalize:
@@ -138,24 +138,23 @@ def compute_acc():
             text = text.replace(' ', '')
         return text
     
-    dirs = [
-        # ('logs/v1.0.1/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
-        # ('logs/v1.0.1/BigC_2022_49', 'test_files/receipt_data-test_cThao_warped/BigC_2022_49/label-bigC-2022-49.json'),
-        # ('logs/v1.0.1/Coopmart_CoopXtra_2022_76', 'test_files/receipt_data-test_cThao_warped/Coopmart_CoopXtra_2022_76/label-coopmart-coopxtra-2022-76.json'),
-        # ('logs/v1.0.1/Emart_2022_29', 'test_files/receipt_data-test_cThao_warped/Emart_2022_29/label-emart-2022-29.json'),
-        ('logs/v1.0.1/GS25_46', 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'),
-        # ('logs/v1.0.1/Vinmart_50', 'test_files/receipt_data-test_cThao_warped/Vinmart_50/label-vinmart-50.json'),
-        # ('logs/v1.0.1/Winmart_2022_40', 'test_files/receipt_data-test_cThao_warped/Winmart_2022_40/label-winmart-2022-38.json')
-    ]
+    # dirs = [
+    #     # ('logs/v1.0.1/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
+    #     # ('logs/v1.0.1/BigC_2022_49', 'test_files/receipt_data-test_cThao_warped/BigC_2022_49/label-bigC-2022-49.json'),
+    #     # ('logs/v1.0.1/Coopmart_CoopXtra_2022_76', 'test_files/receipt_data-test_cThao_warped/Coopmart_CoopXtra_2022_76/label-coopmart-coopxtra-2022-76.json'),
+    #     # ('logs/v1.0.1/Emart_2022_29', 'test_files/receipt_data-test_cThao_warped/Emart_2022_29/label-emart-2022-29.json'),
+    #     ('logs/v1.0.1/GS25_46', 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'),
+    #     # ('logs/v1.0.1/Vinmart_50', 'test_files/receipt_data-test_cThao_warped/Vinmart_50/label-vinmart-50.json'),
+    #     # ('logs/v1.0.1/Winmart_2022_40', 'test_files/receipt_data-test_cThao_warped/Winmart_2022_40/label-winmart-2022-38.json')
+    # ]
 
     dirs = [
-        # ('logs/v1.0.1/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
+        ('logs/v1.0.2-llm_ocr/Go_2022_53', 'test_files/receipt_data-test_cThao_warped/Go_2022_53/label-Go-2022-53.json'),
         ('logs/v1.0.2-llm_ocr/BigC_2022_49', 'test_files/receipt_data-test_cThao_warped/BigC_2022_49/label-bigC-2022-49.json'),
-        # ('logs/v1.0.1/Coopmart_CoopXtra_2022_76', 'test_files/receipt_data-test_cThao_warped/Coopmart_CoopXtra_2022_76/label-coopmart-coopxtra-2022-76.json'),
-        # ('logs/v1.0.1/Emart_2022_29', 'test_files/receipt_data-test_cThao_warped/Emart_2022_29/label-emart-2022-29.json'),
-        # ('logs/v1.0.1/GS25_46', 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'),
-        # ('logs/v1.0.1/Vinmart_50', 'test_files/receipt_data-test_cThao_warped/Vinmart_50/label-vinmart-50.json'),
-        # ('logs/v1.0.1/Winmart_2022_40', 'test_files/receipt_data-test_cThao_warped/Winmart_2022_40/label-winmart-2022-38.json')
+        ('logs/v1.0.2-llm_ocr/Coopmart_CoopXtra_2022_76', 'test_files/receipt_data-test_cThao_warped/Coopmart_CoopXtra_2022_76/label-coopmart-coopxtra-2022-76.json'),
+        ('logs/v1.0.2-llm_ocr/Emart_2022_29', 'test_files/receipt_data-test_cThao_warped/Emart_2022_29/label-emart-2022-29.json'),
+        ('logs/v1.0.2-llm_ocr/GS25_46', 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'),
+        ('logs/v1.0.2-llm_ocr/Winmart_2022_40', 'test_files/receipt_data-test_cThao_warped/Winmart_2022_40/label-winmart-2022-38.json')
     ]
 
     # init field stats
@@ -213,10 +212,10 @@ def compute_acc():
 
                 if field in GENERAL_FIELDS:
                     gt = file_anno[field]
-                    pred = file_pred[field] 
+                    pred = file_pred.get(field, '') 
                     field_stats[field]['total'] += 1
                     field_stats[field]['correct'] += int(preprocess_result(field, gt)==preprocess_result(field, pred))
-                    # if field == 'mart_name' and preprocess_result(field, gt) != preprocess_result(field, pred):
+                    # if field == 'time' and preprocess_result(field, gt) != preprocess_result(field, pred):
                     #     print(f'gt: {gt}, pred: {pred}')
                     #     pdb.set_trace()
 
@@ -235,9 +234,9 @@ def compute_acc():
                                 final_prod = pred_prod
                         if final_prod is not None:
                             for prod_field, gt_field_value in prod_gt.items():
-                                pred_field_value = final_prod[prod_field]
+                                pred_field_value = final_prod.get(prod_field, '')
                                 field_stats[prod_field]['correct'] += int(preprocess_result(prod_field, gt_field_value)==preprocess_result(prod_field, pred_field_value))
-                                # if prod_field == 'product_name' and preprocess_result(prod_field, gt_field_value) != preprocess_result(prod_field, pred_field_value):
+                                # if prod_field == 'product_total_money' and preprocess_result(prod_field, gt_field_value) != preprocess_result(prod_field, pred_field_value):
                                 #     print(f'gt: {gt_field_value}, pred: {pred_field_value}')
                                 #     pdb.set_trace()
 

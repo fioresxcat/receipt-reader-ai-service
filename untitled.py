@@ -199,6 +199,23 @@ def warp_and_rotate():
         print(f'done {ip}')
 
 
+
+def nothing():
+    fp = 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'
+    with open(fp) as f:
+        data = json.load(f)
+    
+    for file_index, file_info in enumerate(data):
+        products = file_info['products']
+        for prod_index, prod in enumerate(products):
+            prod['product_unit_price'] = prod['product_original_price']
+            products[prod_index] = prod
+    
+    with open('label-gs25-46.json', 'w') as f:
+        json.dump(data, f, ensure_ascii=False)
+
+
 if __name__ == '__main__':
     pass
     # warp_and_rotate()
+    # nothing()

@@ -1,1 +1,1 @@
-from .information_extraction import InformationExtractor
+from .information_extraction_new import LLMInformationExtractor

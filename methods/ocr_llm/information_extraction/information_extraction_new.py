@@ -52,6 +52,8 @@ class LLMInformationExtractor(BaseModuleVLLM):
             'product_total_money': """Tổng tiền của sản phẩm/mặt hàng, tính bằng số lượng sản phẩm/mặt hàng nhân với giá tiền một đơn vị sản phẩm/mặt hàng."""
         }
 
+        
+
     
     @staticmethod
     def get_instance(common_config, model_config):
@@ -60,13 +62,23 @@ class LLMInformationExtractor(BaseModuleVLLM):
         return LLMInformationExtractor.instance
 
 
-    def get_prompt_system(self):
+    def get_prompt_system(self, mart_type):
+        if mart_type == 'gs25':
+            exclude_keys = ['mart_name']
+        elif mart_type == 'winmart':
+            exclude_keys = ['total_quantity']
+        else:
+            exclude_keys = []
         # get json schema
         prompt = dict()
         for field in self.general_fields.keys():
+            if field in exclude_keys:
+                continue
             prompt[field] = (str, Field(description=self.general_fields[field]))
         object = dict()
         for sub_field in self.product_fields.keys():
+            if field in exclude_keys:
+                continue
             object[sub_field] = (str, Field(description=self.product_fields[sub_field]))
         Object = create_model("product", **{k: v for k, v in object.items()})
         prompt['products'] = (list[Object], Field(description="""Thông tin của các sản phẩm/mặt hàng có trong hoá đơn, theo thứ tự từ trên xuống dưới."""))
@@ -75,9 +87,9 @@ class LLMInformationExtractor(BaseModuleVLLM):
         return context
 
 
-    def get_prompt(self, doc_data):
+    def get_prompt(self, doc_data, mart_type):
         messages = [
-            {"role": "system", "content": self.get_prompt_system()},
+            {"role": "system", "content": self.get_prompt_system(mart_type)},
             {"role": "user", "content": "Cho thông tin của một hoá đơn sau: {}, hãy trích xuất các thông tin cần thiết:".format(doc_data)},
         ]
         return messages
@@ -94,7 +106,7 @@ class LLMInformationExtractor(BaseModuleVLLM):
         # import unidecode
         # doc_data = unidecode.unidecode(doc_data)
 
-        messages = self.get_prompt(doc_data)
+        messages = self.get_prompt(doc_data, result['mart_type'])
             
         text = self.tokenizer.apply_chat_template(
             messages,

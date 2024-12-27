@@ -41,8 +41,8 @@ def main(args):
     print('NUMBER OF FILES: ', len(files))
     err_files = []
     for i, file in enumerate(files):
-        if file != 'gs25-1.jpg':
-            continue
+        # if file != 'gs25-1.jpg':
+        #     continue
         try:
             mart_type = args.mart_type if args.mart_type else Path(file).parent
             # assert mart_type in list_mart_types
@@ -80,6 +80,7 @@ def main(args):
         except KeyboardInterrupt:
             raise
         except Exception as e:
+            raise e
             print(e)
             err_files.append(file)
             continue

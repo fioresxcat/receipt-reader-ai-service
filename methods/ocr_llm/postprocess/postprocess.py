@@ -84,6 +84,8 @@ class CoopmartPostprocessor(BaseMartPostprocessor):
             for val_index, val in enumerate(values):
                 if field in ['product_unit_price', 'product_total_money']:
                     infos[field][val_index] = self.format_money(val)
+                elif field in ['product_quantity']:
+                    infos[field][val_index] = val.replace('.', ',')
         return infos
 
 
@@ -112,18 +114,88 @@ class GS25Postprocessor(BaseMartPostprocessor):
     
 
     def postprocess_general_fields(self, infos):
+        mart_name = ''
         for field, values in infos.items():
             for val_index, val in enumerate(values):
                 if field in ['receipt_id']:
                     if val.startswith('-'):
                         new_val = val[1:]
                         infos[field][val_index] = new_val
-                elif field in ['mart_name']:
-                    if infos['pos_id']:
-                        infos[field][val_index] = self.map_mart_name(infos['pos_id'][0])
+                elif field in ['pos_id']:
+                    infos[field][val_index] = val[-2:]
+                    mart_name = self.map_mart_name(val)
+        infos['mart_name'] = [mart_name]
+        return infos
+    
+
+    def postprocess_product_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['product_unit_price', 'product_total_money']:
+                    if '.' in val or ',' in val:
+                        new_val = val.replace('.', ',')
+                    else:
+                        new_val = val + ',000'
+                    val = val.replace('-', '')
+                    infos[field][val_index] = new_val
+                elif field in ['product_quantity']:
+                    new_val = val.replace('-', '')
+                    infos[field][val_index] = new_val
+                    
+        return infos
+    
+
+
+
+class NewBigCPostprocessor(BaseMartPostprocessor):
+    def __init__(self):
+        pass
+
+
+    def postprocess_general_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['total_money']:
+                    infos[field][val_index] = val.replace('.', ',')
+                    
 
         return infos
     
+
+    def postprocess_product_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['product_unit_price', 'product_total_money']:
+                    infos[field][val_index] = val.replace('.', ',')
+        return infos
+
+
+
+class WinmartPostprocessor(BaseMartPostprocessor):
+    def __init__(self):
+        pass
+
+
+    def postprocess_general_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['time']:
+                    num_digits = len([x for x in val if x.isdigit()])
+                    if num_digits == 4:
+                        new_val = val[:2] + ':' + val[-2:]
+                        infos[field][val_index] = new_val
+
+        return infos
+    
+
+    def postprocess_product_fields(self, infos):
+        for field, values in infos.items():
+            for val_index, val in enumerate(values):
+                if field in ['product_unit_price', 'product_total_money']:
+                    infos[field][val_index] = val.replace('.', ',')
+        return infos
+    
+
 
 
 class LLMPostprocessor(BaseModule):
@@ -163,8 +235,8 @@ class LLMPostprocessor(BaseModule):
             'emart': EmartPostprocessor(),
             'coopmart': CoopmartPostprocessor(),
             'gs25': GS25Postprocessor(),
-            'new_bigc': BaseMartPostprocessor(),
-            'winmart': BaseMartPostprocessor(),
+            'new_bigc': NewBigCPostprocessor(),
+            'winmart': WinmartPostprocessor(),
         }
         
 
