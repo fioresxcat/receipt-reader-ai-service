@@ -39,7 +39,7 @@ def process_image(image, mart_type, flow):
     # convert mart_type
     mapping_dict = {
         'Emart': 'emart',
-        'Winmart': 'vinmart',
+        'Winmart': 'winmart',
         'Coopmart': 'coopmart',
         'GS25': 'gs25',
         'BIGC': 'new_bigc'

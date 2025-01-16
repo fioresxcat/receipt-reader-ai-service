@@ -27,13 +27,14 @@ class PostProcessor(BaseModule):
             'coopmart': PostProcessorCOOPMART(common_config, model_config),
             'emart': PostProcessorEMART(common_config, model_config),
             'new_bigc': PostProcessorNEWBIGC(common_config, model_config),
-            'go': PostProcessorGO(common_config, model_config),
-            'topmarket': PostProcessorTOPMARKET(common_config, model_config),
-            'vinmart': PostProcessorVINMART(common_config, model_config),
-            'vinmartplus': PostProcessorWINMART(common_config, model_config),
+            # 'go': PostProcessorGO(common_config, model_config),
+            # 'topmarket': PostProcessorTOPMARKET(common_config, model_config),
+            # 'vinmart': PostProcessorVINMART(common_config, model_config),
+            # 'vinmartplus': PostProcessorWINMART(common_config, model_config),
+            'winmart': PostProcessorWINMART(common_config, model_config),
             'gs25': PostProcessorGS25(common_config, model_config),
-            'new_gs25': PostProcessorNewGS25(common_config, model_config),
-            'winlife': PostProcessorVINMART(common_config, model_config)
+            # 'new_gs25': PostProcessorNewGS25(common_config, model_config),
+            # 'winlife': PostProcessorVINMART(common_config, model_config)
         }
 
         self.keep_fields = ['mart_name', 'date', 'receipt_id', 'pos_id', 'staff', 'time', 'total_money', 'total_quantity', 'products']
@@ -54,14 +55,14 @@ class PostProcessor(BaseModule):
         result = self.post_processor[inp_data['mart_type']].predict(request_id, inp_data)
         # pdb.set_trace()
         metadata = self.add_metadata(metadata, 1, 1)
-        result['result']['type'] = inp_data['mart_type']
-        if result['result']['type'] in ['vinmart', 'vinmartplus']:
-            if '+' in result['result']['mart_name'] and 'C+' not in result['result']['mart_name']:
-                result['result']['type'] = 'winmartplus'
-            else:
-                result['result']['type'] = 'winmart'
-        elif result['result']['type'] in ['heineken', 'heineken_2024']:
-            result['result']['type'] = 'heineken'
+        # result['result']['type'] = inp_data['mart_type']
+        # if result['result']['type'] in ['vinmart', 'vinmartplus']:
+        #     if '+' in result['result']['mart_name'] and 'C+' not in result['result']['mart_name']:
+        #         result['result']['type'] = 'winmartplus'
+        #     else:
+        #         result['result']['type'] = 'winmart'
+        # elif result['result']['type'] in ['heineken', 'heineken_2024']:
+        #     result['result']['type'] = 'heineken'
         
         result['result'] = {k: v for k, v in result['result'].items() if k in self.keep_fields}
         for product_index, product_info in enumerate(result['result']['products']):

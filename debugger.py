@@ -29,7 +29,7 @@ class Debugger(object):
     
     def log_InformationExtractor(self, inp_data, out_data, log_module_path):
         # log json
-        image = inp_data['rotated_image']
+        image = inp_data['rotated_images'][0]
         labels = inp_data['box_labels']
         bbs2idx_sorted= inp_data['bbs2idx_sorted']
         bb2text = inp_data['bb2text']
@@ -71,6 +71,7 @@ class Debugger(object):
         )
         with open(os.path.join(log_module_path, 'log.json'), 'w') as f:
             json.dump(new_data, f, ensure_ascii=False, indent=2)
+        pdb.set_trace()
         # log images
         for fieldname in inp_data['raw_list_box'].keys():
             if fieldname == 'products':
@@ -173,8 +174,8 @@ class Debugger(object):
         elif module_name in ['ReceiptAngleEstimator', 'A4AngleEstimator']:
             for i, rotated_image in enumerate(inp_data['rotated_images']):
                 cv2.imwrite(os.path.join(log_path, 'refined_image_' + str(i) + '.png'), rotated_image)
-        # elif module_name == 'InformationExtractor':
-        #     self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
+        elif module_name == 'InformationExtractor':
+            self.log_InformationExtractor(inp_data, out_data, log_module_path)
         # elif module_name == 'InformationExtractorA4':
         #     self.log_InformationExtractorA4(inp_data, out_data, log_module_path)
         elif module_name == 'PostProcessor':

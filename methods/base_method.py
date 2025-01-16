@@ -28,6 +28,7 @@ class BaseMethod(object):
                     try:
                         self.debugger.log_module(str(request_id), inp, out, module.__class__.__name__)
                     except:
+                        # raise
                         pass
                 break
             else:
@@ -36,6 +37,7 @@ class BaseMethod(object):
                     try:
                         self.debugger.log_module(str(request_id), inp, out, module.__class__.__name__)
                     except:
+                        # raise
                         pass
                 inp.set_data(out.get_data())
         return out, metadata

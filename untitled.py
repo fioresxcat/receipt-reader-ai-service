@@ -201,21 +201,23 @@ def warp_and_rotate():
 
 
 def nothing():
-    fp = 'test_files/receipt_data-test_cThao_warped/GS25_46/label-gs25-46.json'
-    with open(fp) as f:
-        data = json.load(f)
-    
-    for file_index, file_info in enumerate(data):
-        products = file_info['products']
-        for prod_index, prod in enumerate(products):
-            prod['product_unit_price'] = prod['product_original_price']
-            products[prod_index] = prod
-    
-    with open('label-gs25-46.json', 'w') as f:
-        json.dump(data, f, ensure_ascii=False)
+    dir = 'test_files/receipt_data-test_cThao_warped'
+    for mart in os.listdir(dir):
+        mart_dir = os.path.join(dir, mart)
+        label_fp = [fp for fp in Path(mart_dir).glob('label*.json')][0]
+        with open(label_fp) as f:
+            data = json.load(f)
+        list_num_prods = []
+        for file_anno in data:
+            num_prod = len(file_anno['products'])
+            list_num_prods.append(num_prod)
+        
+        print(f'---------------- MART: {mart} ----------------')
+        print(f'Min: {np.min(list_num_prods)}, Mean: {np.mean(list_num_prods)}, Max: {np.max(list_num_prods)}, Median: {np.median(list_num_prods)}')
+        print()
 
-
+        
 if __name__ == '__main__':
     pass
     # warp_and_rotate()
-    # nothing()
+    nothing()
