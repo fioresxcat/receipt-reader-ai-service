@@ -1,0 +1,7 @@
+logs
+test_files
+old_temp/
+test*
+README.md
+streamlit_deploy.py
+run_docker.sh

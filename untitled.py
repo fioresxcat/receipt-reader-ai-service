@@ -173,7 +173,7 @@ def warp_and_rotate():
 
     corner_detector = CornerDetector(config_env['inference_server'], config_models['triton_models']['corner_detection'])
     rotator = ReceiptRotator(config_env['inference_server'], config_models['triton_models']['receipt_rotation'])
-    dir = 'test_files/receipt_data-test_cThao'
+    dir = 'test_files/receipt_data-test'
     for ip in Path(dir).rglob('*'):
         if not is_image(ip):
             continue
@@ -193,7 +193,7 @@ def warp_and_rotate():
         rotated_img = result['rotated_images'][0]
 
         # save
-        save_path = str(ip).replace('/receipt_data-test_cThao/', '/receipt_data-test_cThao_warped/')
+        save_path = str(ip).replace('/receipt_data-test/', '/receipt_data-test_warped/')
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
         cv2.imwrite(save_path, rotated_img)
         print(f'done {ip}')
@@ -201,7 +201,7 @@ def warp_and_rotate():
 
 
 def nothing():
-    dir = 'test_files/receipt_data-test_cThao_warped'
+    dir = 'test_files/receipt_data-test_warped'
     for mart in os.listdir(dir):
         mart_dir = os.path.join(dir, mart)
         label_fp = [fp for fp in Path(mart_dir).glob('label*.json')][0]

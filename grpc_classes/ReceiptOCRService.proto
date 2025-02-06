@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package fiores.ocr.receipt.proto;
+
+
+message ReceiptOCRRequest {	
+	string action           = 1; /* OCR or APPCHECK */
+	string payload	        = 2; /* payload data, base64 string */
+}
+
+message ReceiptOCRResponse {
+	int32 code			    = 1; /* error code */
+	string data	            = 2; /* json dumped response */
+    string metadata         = 3; /* metadata */
+}
+
+service ReceiptOCRServices {
+	rpc ReceiptOCR (ReceiptOCRRequest) returns (ReceiptOCRResponse) {}
+}
+

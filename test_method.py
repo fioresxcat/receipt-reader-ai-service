@@ -25,6 +25,7 @@ config_env = utils.load_yaml('configs/config_env.yaml')
 config_methods = utils.load_yaml('configs/config_methods.yaml')
 config_models = utils.load_yaml('configs/config_models.yaml')
 config_common = utils.load_yaml('configs/config_common.yaml')
+pdb.set_trace()
 
 list_mart_types = ['coopmart', 'emart', 'gs25', 'newbigc_go_top', 'winmart_combined']
 
@@ -41,12 +42,12 @@ def main_multi_dir(args):
     debugger = Debugger(log_path=log_path)
     method_processors = MethodProcessor(config_env, config_methods, config_models, root_logger, time_logger, debugger)
     dirs = [
-        'test_files/receipt_data-test_cThao_warped/BigC_2022_49',
-        'test_files/receipt_data-test_cThao_warped/Coopmart_CoopXtra_2022_76',
-        'test_files/receipt_data-test_cThao_warped/Emart_2022_29',
-        'test_files/receipt_data-test_cThao_warped/Go_2022_53',
-        'test_files/receipt_data-test_cThao_warped/GS25_46',
-        'test_files/receipt_data-test_cThao_warped/Winmart_2022_40'
+        'test_files/receipt_data-test_warped/BigC_2022_49',
+        'test_files/receipt_data-test_warped/Coopmart_CoopXtra_2022_76',
+        'test_files/receipt_data-test_warped/Emart_2022_29',
+        'test_files/receipt_data-test_warped/Go_2022_53',
+        'test_files/receipt_data-test_warped/GS25_46',
+        'test_files/receipt_data-test_warped/Winmart_2022_40'
     ]
     files = []
     for dir in dirs:
@@ -114,8 +115,8 @@ def main(args):
     err_files = []
     ls_times= []
     for i, file in enumerate(files):
-        # if file != '041.jpg':
-        #     continue
+        if file != 'emart-1.jpg':
+            continue
         try:
             mart_type = args.mart_type if args.mart_type else Path(file).parent
             # assert mart_type in list_mart_types

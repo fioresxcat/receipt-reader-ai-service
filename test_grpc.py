@@ -12,60 +12,83 @@ import base64
 import imutils
 from datetime import datetime
 
-from grpc_classes import Scanit_OCRService_pb2, Scanit_OCRService_pb2_grpc
+from grpc_classes import ReceiptOCRService_pb2, ReceiptOCRService_pb2_grpc
+
+
+def is_image(fp):
+    fp = str(fp)
+    return fp.endswith('.jpg') or fp.endswith('.png') or fp.endswith('.jpeg') or fp.endswith('.JPG') or fp.endswith('.JPEG') or fp.endswith('.PNG')
 
 
 options = [
     ('grpc.max_receive_message_length', 1024 * 1024 * 1024),
     ('grpc.max_send_message_length', 1024 * 1024 * 1024)
 ]
-# channel = grpc.insecure_channel("172.31.22.114:5000", options=options) # stag
-# channel = grpc.insecure_channel("172.21.1.143:5000", options=options) # dev
-channel = grpc.insecure_channel("0.0.0.0:5000", options=options)
-stub = Scanit_OCRService_pb2_grpc.ScanitOCRServicesStub(channel)
+channel = grpc.insecure_channel("0.0.0.0:5001", options=options)
+stub = ReceiptOCRService_pb2_grpc.ReceiptOCRServicesStub(channel)
 
-files = glob.glob(os.path.join(sys.argv[1], '*'))
-files.sort()
-CHUNKSIZE = 1024 * 64
-print('NUMBER OF FILES: ', len(files))
-for index, file in enumerate(files):
-    index = '123456789'
-    print(file)
-    # AppCheck request
-    list_b64_images = []
-    if os.path.isdir(file):
-        sub_files = os.listdir(file)
-        for sub_file in sub_files:
-            with open(os.path.join(file, sub_file), "rb") as image_file:
-                b64_image = base64.b64encode(image_file.read())
-                list_b64_images.append(b64_image)
-    else:
-        with open(file, "rb") as image_file:
-            b64_image = base64.b64encode(image_file.read())
-            list_b64_images.append(b64_image)
-    start = datetime.now()
-    request = Scanit_OCRService_pb2.AppCheckRequest(request_id=str(index), images=list_b64_images)
-    response = stub.AppCheck(request)
-    json_resp = json.loads(response.json_data)
-    print(response)
-    print('APP: ', datetime.now() - start)
-    # OCR request
-    start = datetime.now()
-    request = Scanit_OCRService_pb2.OCRRequest(request_id=str(index))
-    response = stub.OCR(request)
-    json_resp = json.loads(response.json_data)
-    print(response)
-    print('OCR: ', datetime.now() - start)
-    
+def main(args):
+    # get files
+    files = os.listdir(args.inp_path)
+    files.sort()
+    err_files = []
+    for i, fn in enumerate(files):
+        if fn != 'emart-1.jpg':
+            continue
+        try:
+            print('PROCESSING: ', fn)
+            if not is_image(fn):
+                continue
+            file_path = os.path.join(args.inp_path, fn)
+            b64_images = []
+            with open(file_path, "rb") as image_file:
+                base64_string = base64.b64encode(image_file.read()).decode()
+            b64_images.append(base64_string)
 
-    
+            # app check
+            payload_dict = {
+                'request_id': fn,
+                'images': b64_images
+            }
+            payload = json.dumps(payload_dict)
+            request = ReceiptOCRService_pb2.ReceiptOCRRequest(action='APPCHECK', payload=payload)
+            response = stub.ReceiptOCR(request)
+            code = response.code
+            data = json.loads(response.data)
+            metadata = json.loads(response.metadata)
+            print(f'Code: {code}, Appcheck Result: {data}')
+            # pdb.set_trace()
+
+            # ocr
+            payload_dict = {
+                'request_id': fn,
+                'images': [],
+                'mart_type': args.mart_type
+            }
+            payload = json.dumps(payload_dict)
+            request = ReceiptOCRService_pb2.ReceiptOCRRequest(action='OCR', payload=payload)
+            response = stub.ReceiptOCR(request)
+            code = response.code
+            data = json.loads(response.data)
+            metadata = json.loads(response.metadata)
+            print(f'Code: {code}, OCR Result: {data}')
+            pdb.set_trace()
+
+        except KeyboardInterrupt:
+            raise
+
+        except Exception as e:
+            raise e
+            print(e)
+            err_files.append(fn)
+            continue
 
 
+if __name__ == '__main__':
+    import argparse
 
-
-
-
-            
-    
-
-
+    parser = argparse.ArgumentParser(description='input for testing grpc')
+    parser.add_argument('--inp_path', type=str, required=True)
+    parser.add_argument('--mart_type', type=str, required=True)
+    args = parser.parse_args()
+    main(args)

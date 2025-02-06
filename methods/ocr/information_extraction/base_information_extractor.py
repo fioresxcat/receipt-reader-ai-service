@@ -41,7 +41,7 @@ class BaseInformationExtractor(BaseModule):
 
 
 
-    def get_raw_product_type1(self, field_start, field_end, field_spec, row_threshold, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels):
+    def get_raw_product_type(self, field_start, field_end, field_spec, row_threshold, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels):
         """
         start by field_start
         end by field_end
@@ -164,14 +164,14 @@ class BaseInformationExtractor(BaseModule):
         #             raw_list_box[fieldname].append(bb2list_boxes[bb])
     
         # # get products
-        if receipt_type in ['gs25',  'new_gs25',  'emart']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_quantity', 'product_unit_price'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['go', 'topmarket', 'new_bigc',  'newbigc_go_top']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
+        if receipt_type in ['gs25', 'emart']:
+            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type('product_name', 'product_total_money', ['product_quantity', 'product_unit_price'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
+        elif receipt_type in ['new_bigc']:
+            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
         elif receipt_type in ['coopmart']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type2('product_id', bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
-        elif receipt_type in ['vinmart', 'vinmartplus', 'winlife', 'winmart_combined']:
-            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type1('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
+            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type('product_id', 'product_total_money', [], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
+        elif receipt_type in ['winmart']:
+            raw_result['products'], raw_text['products'], raw_list_box['products'] = self.get_raw_product_type('product_name', 'product_total_money', ['product_discount_money'], 2, bb2text, bb2cand, bb2list_boxes, bbs2idx_sorted, rbbs, labels)
 
         else:
             raise ValueError('Unknown receipt type: {}'.format(receipt_type))

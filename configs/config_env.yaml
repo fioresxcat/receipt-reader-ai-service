@@ -1,15 +1,15 @@
 grpc: # config for this grpc service
-    GRPC_PORT: ${SCANITOCR_GRPC_PORT}
-    MAX_WORKERS: ${SCANITOCR_MAX_WORKER}
-    MAX_MESSAGE_LENGTH: ${SCANITOCR_MAX_MESSAGE_LENGTH} # calculated in bytes, eg: limit 50MB -> set to 50*2014*1024
-    DEBUG_MODE: ${SCANITOCR_DEBUG_MODE}
-    FORCE_QUIT: ${SCANITOCR_FORCE_QUIT_APPCHECK}
+    GRPC_PORT: ${OCR_GRPC_PORT}
+    MAX_WORKERS: ${OCR_MAX_WORKER}
+    MAX_MESSAGE_LENGTH: ${OCR_MAX_MESSAGE_LENGTH} # calculated in bytes, eg: limit 50MB -> set to 50*2014*1024
+    DEBUG_MODE: ${OCR_DEBUG_MODE}
+    FORCE_QUIT: ${OCR_FORCE_QUIT_APPCHECK}
     
 inference_server: # config of triton server
-    ip: ${SCANITOCR_MODELS_HOST}    # ip of triton server
-    port: ${SCANITOCR_MODELS_PORT}  # port of triton server, common config of grpc port is 8001
-    MAX_RETRY: ${SCANITOCR_MAX_RETRY} # number of time retry request to triton
-    USE_SSL: ${SCANITOCR_USE_SSL}
+    ip: ${OCR_MODELS_HOST}    # ip of triton server
+    port: ${OCR_MODELS_PORT}  # port of triton server, common config of grpc port is 8001
+    MAX_RETRY: ${OCR_MAX_RETRY} # number of time retry request to triton
+    USE_SSL: ${OCR_USE_SSL}
 
 redis: # config of redisdb
     host: ${REDIS_HOST}
@@ -17,9 +17,10 @@ redis: # config of redisdb
     password: ${REDIS_PASSWORD}
     time_to_expire_s: ${REDIS_TIME_TO_EXPIRE} # expire time of key-value insert to db, calculated in seconds
     is_cluster: ${REDIS_IS_CLUSTER} # 0 if redis, 1 if redis-cluster
+    use_ssl: ${REDIS_USE_SSL}
     
 
 vllm_server: # config of vllm server
-    ip: ${AIHN_VLLM_HOST}    # ip of vllm server
-    port: ${AIHN_VLLM_PORT}  # port of vllm server
-    api_key: ${AIHN_VLLM_API_KEY}  # port of vllm server
+    ip: ${VLLM_HOST}    # ip of vllm server
+    port: ${VLLM_PORT}  # port of vllm server
+    api_key: ${VLLM_API_KEY}  # port of vllm server

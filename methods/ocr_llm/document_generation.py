@@ -103,7 +103,8 @@ class DocumentGenerator(BaseModule):
                         if re.search('^[\.|\,]', texts[i]) is not None and len(line_text) >= 2 and line_text[-1] == ' ' and line_text[-2] != ' ' is not None:
                             line_text = line_text[:-1]
                     except:
-                        pdb.set_trace()
+                        pass
+                        # pdb.set_trace()
                     line_text.append(texts[i])
                 page_texts.append(''.join(line_text))
             page_texts = '\n'.join(page_texts)

@@ -10,8 +10,6 @@ class BaseMethod(object):
     def predict(self, request_id, inp):
         metadata = {}
         inp_data = inp.get_data()
-        inp_data['rule_code'] = []
-        inp_data['rule_msg'] = []
         inp.set_data(inp_data)
         
         for module in self.modules:
@@ -23,7 +21,7 @@ class BaseMethod(object):
                 }
             out, metadata = module.predict(request_id, inp, out, metadata)
             # end whole process if 1 module gets error or force quit=true and hit rule check
-            if out.error['error_code'] != 0:
+            if out.error != 0:
                 if self.debugger is not None:
                     try:
                         self.debugger.log_module(str(request_id), inp, out, module.__class__.__name__)

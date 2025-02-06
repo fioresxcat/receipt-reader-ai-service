@@ -13,18 +13,13 @@ class Input(object):
 
 
 class Output:
-    def __init__(self, error_code=0, error_message='', data={}):
-        self.error = {
-            'error_code': 0,
-            'error_msg': 'OK'
-        }
+    def __init__(self, error_code=0, data={}):
+        self.error = error_code
         self.data = data
 
     
-    def set_error(self, error_code: int, error_message: str) -> None:
-        self.error['error_code'] = error_code 
-        self.error['error_msg'] = error_message
-
+    def set_error(self, error_code: int) -> None:
+        self.error = error_code
 
     def set_data(self, data: dict) -> None:
         self.data = data 

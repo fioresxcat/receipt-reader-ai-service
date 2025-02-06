@@ -1,3 +1,4 @@
 use_methods:
     OCR: true
-    OCR_LLM: true
+    OCR_LLM: false
+    AppCheck: true

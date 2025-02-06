@@ -69,3 +69,4 @@ temp*
 venv
 logs*
 test_files/
+old_temp/

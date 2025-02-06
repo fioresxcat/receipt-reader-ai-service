@@ -1,19 +1,18 @@
 triton_models:
     general_ocr:
-        model_spec_name: SCANIT_general_ocr
+        model_spec_name: general_ocr
         model_spec_version: 72024010301003
         input_shape: [40, 416, 3]
         input_name: input
         input_type: FP32
         output_name: output
         charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
-        # charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $"
         max_batch_size: 8
         request_timeout: 60.0
 
 
     text_detection:
-        model_spec_name: SCANIT_text_detection
+        model_spec_name: text_detection
         model_spec_version: 72024041501004
         input_name: input
         input_type: UINT8
@@ -25,7 +24,7 @@ triton_models:
 
 
     receipt_information_extraction:
-        model_spec_name: SCANIT_information_extraction
+        model_spec_name: information_extraction
         model_spec_version: 72024041501004
         input_name: [input_ids, bbox, attention_mask, pixel_values]
         input_type: [INT64, INT64, INT64, FP32]
@@ -33,26 +32,6 @@ triton_models:
         model_dir: models_receipt
         request_timeout: 60.0
 
-    corner_detection:
-        model_spec_name: RECEIPT_corner_detection
-        model_spec_version: 42023111001002
-        input_shape: [512, 512, 3]
-        input_name: input
-        input_type: FP32
-        output_name: output
-        max_batch_size: 1
-        num_point: 4
-        request_timeout: 60.0
-
-    receipt_rotation:
-        model_spec_name: RECEIPT_receipt_rotation
-        model_spec_version: 32023091801006
-        input_shape: [512, 512, 3]
-        input_name: input
-        input_type: UINT8
-        output_name: output
-        max_batch_size: 1
-        request_timeout: 60.0
 
 vllm_models:
     base-model:
@@ -67,99 +46,3 @@ vllm_models:
         max_tokens: 10144
         temperature: 0
         top_p: 1
-
-
-# receipt_classification:
-#     model_spec_name: SCANIT_receipt_classification
-#     model_spec_version: 212024080401001
-#     input_shape: [512, 256, 3]
-#     input_name: input
-#     input_type: UINT8
-#     output_name: output
-#     request_timeout: 60.0
-
-
-# corner_detection:
-#     model_spec_name: SCANIT_corner_detection
-#     model_spec_version: 42023111001002
-#     input_shape: [512, 512, 3]
-#     input_name: input
-#     input_type: FP32
-#     output_name: output
-#     num_point: 4
-#     request_timeout: 60.0
-
-
-    
-# barcode_ocr:
-#     model_spec_name: SCANIT_barcode_ocr
-#     model_spec_version: 12024022901013
-#     input_shape: [40, 416, 3]
-#     input_name: input
-#     input_type: FP32
-#     output_name: output
-#     charset: "0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ"
-#     # charset: "&1#@'()+,-./0123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz<>ÀÁÂÃÇÈÉÊÌÍÒÓÔÕÙÚÝàáâãçèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ’“”;* $"
-#     max_batch_size: 1
-#     request_timeout: 60.0
-
-
-
-# spam_detection:
-#     model_spec_name: SCANIT_spam_detection
-#     model_spec_version: 72024080501005
-#     input_shape: [256, 256, 3]
-#     input_name: input
-#     input_type: FP32
-#     output_name: output
-#     request_timeout: 60.0
-
-# receipt_rotation:
-#     model_spec_name: SCANIT_receipt_rotation
-#     model_spec_version: 32023091801006
-#     input_shape: [512, 512, 3]
-#     input_name: input
-#     input_type: UINT8
-#     output_name: output
-#     request_timeout: 60.0
-
-# fold_cut_pair_detection:
-#     model_spec_name: SCANIT_fold_cut_pair_detection
-#     model_spec_version: 12023081401007
-#     input_shape: [640, 640, 3]
-#     input_name: images
-#     input_type: UINT8
-#     output_name: output0
-#     conf_threshold: 0.6
-#     iou_threshold: 0.5
-#     request_timeout: 60.0
-
-# fraud_device_detection:
-#     model_spec_name: SCANIT_fraud_device_detection
-#     model_spec_version: 12023082101008
-#     input_shape: [224, 224, 3]
-#     input_name: input_1
-#     input_type: FP32
-#     output_name: dense
-#     threshold: 0.08
-#     request_timeout: 60.0
-
-# fraud_texture_detection:
-#     model_spec_name: SCANIT_fraud_texture_detection
-#     model_spec_version: 32024070801009
-#     input_shape: [512, 512, 3]
-#     input_name: input
-#     input_type: FP32
-#     output_name: output
-#     threshold: 0.2
-#     max_batch_size: 3
-#     request_timeout: 60.0
-
-# receipt_angle_estimation:
-#     model_spec_name: SCANIT_receipt_angle_estimation
-#     model_spec_version: 12023082101010
-#     input_shape: [512, 128, 3]
-#     input_name: input_1
-#     input_type: FP32
-#     output_name: tf_op_layer_Mul
-#     request_timeout: 60.0

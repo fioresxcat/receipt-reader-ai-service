@@ -1,4 +1,4 @@
-FROM python:3.8.17-slim-bullseye
+FROM python:3.10.12-slim-bullseye
 
 RUN apt-get update -y && apt-get install libgtk2.0-dev -y
 
@@ -13,7 +13,7 @@ RUN pip cache purge
 
 COPY . /ocr
 RUN rm -rf /root/.cache/*
-RUN mv /ocr/bpemb /root/.cache
+# RUN mv /ocr/bpemb /root/.cache
 
 VOLUME "/ocr/logs"
 

@@ -1,5 +1,7 @@
 import pdb
-from . import OCRProcessor, OCRLLMProcessor
+from .app_check.processor import AppCheckProcessor
+from .ocr.processor import OCRProcessor
+from .ocr_llm.processor import OCRLLMProcessor
 
 class MethodProcessor(object):
     def __init__(self, config_env, config_methods, config_models, root_logger, time_logger, debugger=None):
@@ -11,7 +13,8 @@ class MethodProcessor(object):
         self.debugger = debugger
         self.method_mapper = {
             'OCR': OCRProcessor,
-            'OCR_LLM': OCRLLMProcessor
+            'OCR_LLM': OCRLLMProcessor,
+            'AppCheck': AppCheckProcessor
         }
         self.init_methods()
 

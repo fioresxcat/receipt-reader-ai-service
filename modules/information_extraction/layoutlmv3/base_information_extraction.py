@@ -1,6 +1,5 @@
 import pdb
 import cv2
-import torch
 import heapq
 import unidecode
 import numpy as np
